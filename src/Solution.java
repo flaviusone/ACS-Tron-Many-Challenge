@@ -44,12 +44,12 @@ public class Solution {
 
 			/* See whitch way is the best one */
 			int way;
-			if (counter1 > counter2 && counter1 > counter3 && counter1 > counter4) {
+			if (counter1 >= counter2 && counter1 >= counter3 && counter1 >= counter4) {
 				way = 0; /* Down */
 			}
-			else if (counter2 > counter1 && counter2 > counter3 && counter2 > counter4)
+			else if (counter2 >= counter1 && counter2 >= counter3 && counter2 >= counter4)
 				way = 1; /* Up */
-			else if (counter3 > counter2 && counter3 > counter1 && counter3 > counter4)
+			else if (counter3 >= counter2 && counter3 >= counter1 && counter3 >= counter4)
 				way = 2; /* Right */
 			else
 				way = 3; /* Left */
@@ -107,12 +107,12 @@ public class Solution {
 
 			/* See whitch way is the best one */
 			int way;
-			if (counter1 > counter2 && counter1 > counter3 && counter1 > counter4) {
+			if (counter1 >= counter2 && counter1 >= counter3 && counter1 >= counter4) {
 				way = 0; /* Down */
 			}
-			else if (counter2 > counter1 && counter2 > counter3 && counter2 > counter4)
+			else if (counter2 >= counter1 && counter2 >= counter3 && counter2 >= counter4)
 				way = 1; /* Up */
-			else if (counter3 > counter2 && counter3 > counter1 && counter3 > counter4)
+			else if (counter3 >= counter2 && counter3 >= counter1 && counter3 >= counter4)
 				way = 2; /* Right */
 			else
 				way = 3; /* Left */
