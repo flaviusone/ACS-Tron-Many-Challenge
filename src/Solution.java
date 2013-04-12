@@ -7,51 +7,122 @@ import java.util.regex.*;
 public class Solution {
 	/* Head ends here */
 	static void nextMove(String player, int[] pos, String[] board) {
+		int counter1=0,counter2=0,counter3=0,counter4=0,i;
 		if (player.equals("r")) {
-			if (board[ pos[ 0 ] + 1 ].charAt(pos[ 1 ]) != '#'
-					&& board[ pos[ 0 ] + 1 ].charAt(pos[ 1 ]) != 'r'
-					&& board[ pos[ 0 ] + 1 ].charAt(pos[ 1 ]) != 'g') {
-				System.out.println("DOWN");
-				return;
+			/*Search Down*/
+			i=1;
+			while(board[ pos[ 0 ] + i ].charAt(pos[ 1 ]) != '#'
+					&& board[ pos[ 0 ] + i ].charAt(pos[ 1 ]) != 'r'
+					&& board[ pos[ 0 ] + i ].charAt(pos[ 1 ]) != 'g')
+			{
+				counter1++;
+				i++;
 			}
+			/*Search Up*/
+			i=1;
+			while(board[ pos[ 0 ] - i ].charAt(pos[ 1 ]) != '#'
+					&& board[ pos[ 0 ] - i ].charAt(pos[ 1 ]) != 'r'
+					&& board[ pos[ 0 ] - i ].charAt(pos[ 1 ]) != 'g')
+			{
+				counter2++;
+				i++;
+			}
+			/*Search Right*/
+			i=1;
+			while(board[ pos[ 0 ] ].charAt(pos[ 1 ] + i) != '#'
+					&& board[ pos[ 0 ] ].charAt(pos[ 1 ] + i) != 'r'
+					&& board[ pos[ 0 ] ].charAt(pos[ 1 ] + i) != 'g')
+			{
+				counter3++;
+				i++;
+			}
+			/*Search Left*/
+			i=1;
+			while(board[ pos[ 0 ] ].charAt(pos[ 1 ] - i) != '#'
+					&& board[ pos[ 0 ] ].charAt(pos[ 1 ] - i) != 'r'
+					&& board[ pos[ 0 ] ].charAt(pos[ 1 ] - i) != 'g')
+			{
+				counter4++;
+				i++;
+			}
+			
+			/*See whitch way is the best one*/
+			int way;
+			if(counter1 > counter2 && counter1 > counter3 && counter1 > counter4){
+				way=0; /*Down*/
+			}else if(counter2 > counter1 && counter2 > counter3 && counter2 > counter4)
+				way=1; /*Up*/
+			else if(counter3 > counter2 && counter3 > counter1 && counter3 > counter4)
+				way=2; /*Right*/
+			else way=3; /*Left*/
+			
+			/*Print the best way to go*/
+			switch(way){
+			case 0 : System.out.println("DOWN");
+			case 1 : System.out.println("UP");
+			case 2 : System.out.println("RIGHT");
+			default: System.out.println("LEFT");
+			}
+			
+			
 
-			if (board[ pos[ 0 ] ].charAt(pos[ 1 ] + 1) != '#'
-					&& board[ pos[ 0 ] ].charAt(pos[ 1 ] + 1) != 'r'
-					&& board[ pos[ 0 ] ].charAt(pos[ 1 ] + 1) != 'g') {
-				System.out.println("RIGHT");
-				return;
-			}
-			if (board[ pos[ 0 ] ].charAt(pos[ 1 ] - 1) != '#'
-					&& board[ pos[ 0 ] ].charAt(pos[ 1 ] - 1) != 'r'
-					&& board[ pos[ 0 ] ].charAt(pos[ 1 ] - 1) != 'g') {
-				System.out.println("LEFT");
-				return;
-			}
-			System.out.println("UP");
-			return;
 		}
 		else {
-			if (board[ pos[ 2 ] - 1 ].charAt(pos[ 3 ]) != '#'
-					&& board[ pos[ 2 ] - 1 ].charAt(pos[ 3 ]) != 'r'
-					&& board[ pos[ 2 ] - 1 ].charAt(pos[ 3 ]) != 'g') {
-				System.out.println("UP");
-				return;
+			/*Search Down*/
+			i=1;
+			while(board[ pos[2] + i ].charAt(pos[3]) != '#'
+					&& board[ pos[2] + i ].charAt(pos[3]) != 'r'
+					&& board[ pos[2] + i ].charAt(pos[3]) != 'g')
+			{
+				counter1++;
+				i++;
 			}
-
-			if (board[ pos[ 2 ] ].charAt(pos[ 3 ] - 1) != '#'
-					&& board[ pos[ 2 ] ].charAt(pos[ 3 ] - 1) != 'r'
-					&& board[ pos[ 2 ] ].charAt(pos[ 3 ] - 1) != 'g') {
-				System.out.println("LEFT");
-				return;
+			/*Search Up*/
+			i=1;
+			while(board[ pos[2] - i ].charAt(pos[3]) != '#'
+					&& board[ pos[2] - i ].charAt(pos[3]) != 'r'
+					&& board[ pos[2] - i ].charAt(pos[3]) != 'g')
+			{
+				counter2++;
+				i++;
 			}
-			if (board[ pos[ 2 ] ].charAt(pos[ 3 ] + 1) != '#'
-					&& board[ pos[ 2 ] ].charAt(pos[ 3 ] + 1) != 'r'
-					&& board[ pos[ 2 ] ].charAt(pos[ 3 ] + 1) != 'g') {
-				System.out.println("RIGHT");
-				return;
+			/*Search Right*/
+			i=1;
+			while(board[ pos[2] ].charAt(pos[3] + i) != '#'
+					&& board[ pos[2] ].charAt(pos[3] + i) != 'r'
+					&& board[ pos[2] ].charAt(pos[3] + i) != 'g')
+			{
+				counter3++;
+				i++;
 			}
-			System.out.println("DOWN");
-			return;
+			/*Search Left*/
+			i=1;
+			while(board[ pos[2] ].charAt(pos[3] - i) != '#'
+					&& board[ pos[2] ].charAt(pos[3] - i) != 'r'
+					&& board[ pos[2] ].charAt(pos[3] - i) != 'g')
+			{
+				counter4++;
+				i++;
+			}
+			
+			/*See whitch way is the best one*/
+			int way;
+			if(counter1 > counter2 && counter1 > counter3 && counter1 > counter4){
+				way=0; /*Down*/
+			}else if(counter2 > counter1 && counter2 > counter3 && counter2 > counter4)
+				way=1; /*Up*/
+			else if(counter3 > counter2 && counter3 > counter1 && counter3 > counter4)
+				way=2; /*Right*/
+			else way=3; /*Left*/
+			
+			/*Print the best way to go*/
+			switch(way){
+			case 0 : System.out.println("DOWN");
+			case 1 : System.out.println("UP");
+			case 2 : System.out.println("RIGHT");
+			default: System.out.println("LEFT");
+			}
+			
 		}
 
 	}
