@@ -7,7 +7,39 @@ import java.util.regex.*;
 public class Solution {
 /* Head ends here */
 static void nextMove(String player, int[] pos, String [] board){
-   //logic here
+	if(player.equals("r"))
+	{
+	if(board[pos[0]-1].charAt(pos[1])!='#' && board[pos[0]-1].charAt(pos[1])!= 'r' && board[pos[0]-1].charAt(pos[1])!= 'g'){
+		   System.out.println("UP");
+		   return;
+	}
+	if(board[pos[0]].charAt(pos[1]-1)!='#' && board[pos[0]].charAt(pos[1]-1)!= 'r' && board[pos[0]].charAt(pos[1]-1)!= 'g'){
+		   System.out.println("LEFT");
+		   return;
+	}
+	if(board[pos[0]].charAt(pos[1]+1)!='#' && board[pos[0]].charAt(pos[1]+1)!= 'r' && board[pos[0]].charAt(pos[1]+1)!= 'g'){
+		   System.out.println("RIGHT");
+		   return;
+	}
+	System.out.println("DOWN");
+	return;
+	}else{
+		if(board[pos[2]-1].charAt(pos[3])!='#' && board[pos[2]-1].charAt(pos[3])!= 'r' && board[pos[2]-1].charAt(pos[3])!= 'g'){
+			   System.out.println("UP");
+			   return;
+		}
+		if(board[pos[2]].charAt(pos[3]-1)!='#' && board[pos[2]].charAt(pos[3]-1)!= 'r' && board[pos[2]].charAt(pos[3]-1)!= 'g'){
+			   System.out.println("LEFT");
+			   return;
+		}
+		if(board[pos[2]].charAt(pos[3]+1)!='#' && board[pos[2]].charAt(pos[3]+1)!= 'r' && board[pos[2]].charAt(pos[3]+1)!= 'g'){
+			   System.out.println("RIGHT");
+			   return;
+		}
+		System.out.println("DOWN");
+		return;
+	}
+
   }
 /* Tail starts here */
 public static void main(String[] args) {
