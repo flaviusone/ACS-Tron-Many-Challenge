@@ -8,10 +8,10 @@ public class Solution {
 	/* Head ends here */
 	static void nextMove(String player, int[] pos, String[] board) {
 		if (player.equals("r")) {
-			if (board[ pos[ 0 ] - 1 ].charAt(pos[ 1 ]) != '#'
-					&& board[ pos[ 0 ] - 1 ].charAt(pos[ 1 ]) != 'r'
-					&& board[ pos[ 0 ] - 1 ].charAt(pos[ 1 ]) != 'g') {
-				System.out.println("UP");
+			if (board[ pos[ 0 ] + 1 ].charAt(pos[ 1 ]) != '#'
+					&& board[ pos[ 0 ] + 1 ].charAt(pos[ 1 ]) != 'r'
+					&& board[ pos[ 0 ] + 1 ].charAt(pos[ 1 ]) != 'g') {
+				System.out.println("DOWN");
 				return;
 			}
 
@@ -27,7 +27,7 @@ public class Solution {
 				System.out.println("LEFT");
 				return;
 			}
-			System.out.println("DOWN");
+			System.out.println("UP");
 			return;
 		}
 		else {
