@@ -7,122 +7,132 @@ import java.util.regex.*;
 public class Solution {
 	/* Head ends here */
 	static void nextMove(String player, int[] pos, String[] board) {
-		int counter1=0,counter2=0,counter3=0,counter4=0,i;
+		int counter1 = 0, counter2 = 0, counter3 = 0, counter4 = 0, i;
 		if (player.equals("r")) {
-			/*Search Down*/
-			i=1;
-			while(board[ pos[ 0 ] + i ].charAt(pos[ 1 ]) != '#'
+			/* Search Down */
+			i = 1;
+			while (board[ pos[ 0 ] + i ].charAt(pos[ 1 ]) != '#'
 					&& board[ pos[ 0 ] + i ].charAt(pos[ 1 ]) != 'r'
-					&& board[ pos[ 0 ] + i ].charAt(pos[ 1 ]) != 'g')
-			{
+					&& board[ pos[ 0 ] + i ].charAt(pos[ 1 ]) != 'g') {
 				counter1++;
 				i++;
 			}
-			/*Search Up*/
-			i=1;
-			while(board[ pos[ 0 ] - i ].charAt(pos[ 1 ]) != '#'
+			/* Search Up */
+			i = 1;
+			while (board[ pos[ 0 ] - i ].charAt(pos[ 1 ]) != '#'
 					&& board[ pos[ 0 ] - i ].charAt(pos[ 1 ]) != 'r'
-					&& board[ pos[ 0 ] - i ].charAt(pos[ 1 ]) != 'g')
-			{
+					&& board[ pos[ 0 ] - i ].charAt(pos[ 1 ]) != 'g') {
 				counter2++;
 				i++;
 			}
-			/*Search Right*/
-			i=1;
-			while(board[ pos[ 0 ] ].charAt(pos[ 1 ] + i) != '#'
+			/* Search Right */
+			i = 1;
+			while (board[ pos[ 0 ] ].charAt(pos[ 1 ] + i) != '#'
 					&& board[ pos[ 0 ] ].charAt(pos[ 1 ] + i) != 'r'
-					&& board[ pos[ 0 ] ].charAt(pos[ 1 ] + i) != 'g')
-			{
+					&& board[ pos[ 0 ] ].charAt(pos[ 1 ] + i) != 'g') {
 				counter3++;
 				i++;
 			}
-			/*Search Left*/
-			i=1;
-			while(board[ pos[ 0 ] ].charAt(pos[ 1 ] - i) != '#'
+			/* Search Left */
+			i = 1;
+			while (board[ pos[ 0 ] ].charAt(pos[ 1 ] - i) != '#'
 					&& board[ pos[ 0 ] ].charAt(pos[ 1 ] - i) != 'r'
-					&& board[ pos[ 0 ] ].charAt(pos[ 1 ] - i) != 'g')
-			{
+					&& board[ pos[ 0 ] ].charAt(pos[ 1 ] - i) != 'g') {
 				counter4++;
 				i++;
 			}
-			
-			/*See whitch way is the best one*/
+
+			/* See whitch way is the best one */
 			int way;
-			if(counter1 > counter2 && counter1 > counter3 && counter1 > counter4){
-				way=0; /*Down*/
-			}else if(counter2 > counter1 && counter2 > counter3 && counter2 > counter4)
-				way=1; /*Up*/
-			else if(counter3 > counter2 && counter3 > counter1 && counter3 > counter4)
-				way=2; /*Right*/
-			else way=3; /*Left*/
-			
-			/*Print the best way to go*/
-			switch(way){
-			case 0 : System.out.println("DOWN");
-			case 1 : System.out.println("UP");
-			case 2 : System.out.println("RIGHT");
-			default: System.out.println("LEFT");
+			if (counter1 > counter2 && counter1 > counter3 && counter1 > counter4) {
+				way = 0; /* Down */
 			}
-			
-			
+			else if (counter2 > counter1 && counter2 > counter3 && counter2 > counter4)
+				way = 1; /* Up */
+			else if (counter3 > counter2 && counter3 > counter1 && counter3 > counter4)
+				way = 2; /* Right */
+			else
+				way = 3; /* Left */
+
+			/* Print the best way to go */
+			switch (way) {
+			case 0:
+				System.out.println("DOWN");
+				break;
+			case 1:
+				System.out.println("UP");
+				break;
+			case 2:
+				System.out.println("RIGHT");
+				break;
+			default:
+				System.out.println("LEFT");
+				break;
+			}
 
 		}
 		else {
-			/*Search Down*/
-			i=1;
-			while(board[ pos[2] + i ].charAt(pos[3]) != '#'
-					&& board[ pos[2] + i ].charAt(pos[3]) != 'r'
-					&& board[ pos[2] + i ].charAt(pos[3]) != 'g')
-			{
+			/* Search Down */
+			i = 1;
+			while (board[ pos[ 2 ] + i ].charAt(pos[ 3 ]) != '#'
+					&& board[ pos[ 2 ] + i ].charAt(pos[ 3 ]) != 'r'
+					&& board[ pos[ 2 ] + i ].charAt(pos[ 3 ]) != 'g') {
 				counter1++;
 				i++;
 			}
-			/*Search Up*/
-			i=1;
-			while(board[ pos[2] - i ].charAt(pos[3]) != '#'
-					&& board[ pos[2] - i ].charAt(pos[3]) != 'r'
-					&& board[ pos[2] - i ].charAt(pos[3]) != 'g')
-			{
+			/* Search Up */
+			i = 1;
+			while (board[ pos[ 2 ] - i ].charAt(pos[ 3 ]) != '#'
+					&& board[ pos[ 2 ] - i ].charAt(pos[ 3 ]) != 'r'
+					&& board[ pos[ 2 ] - i ].charAt(pos[ 3 ]) != 'g') {
 				counter2++;
 				i++;
 			}
-			/*Search Right*/
-			i=1;
-			while(board[ pos[2] ].charAt(pos[3] + i) != '#'
-					&& board[ pos[2] ].charAt(pos[3] + i) != 'r'
-					&& board[ pos[2] ].charAt(pos[3] + i) != 'g')
-			{
+			/* Search Right */
+			i = 1;
+			while (board[ pos[ 2 ] ].charAt(pos[ 3 ] + i) != '#'
+					&& board[ pos[ 2 ] ].charAt(pos[ 3 ] + i) != 'r'
+					&& board[ pos[ 2 ] ].charAt(pos[ 3 ] + i) != 'g') {
 				counter3++;
 				i++;
 			}
-			/*Search Left*/
-			i=1;
-			while(board[ pos[2] ].charAt(pos[3] - i) != '#'
-					&& board[ pos[2] ].charAt(pos[3] - i) != 'r'
-					&& board[ pos[2] ].charAt(pos[3] - i) != 'g')
-			{
+			/* Search Left */
+			i = 1;
+			while (board[ pos[ 2 ] ].charAt(pos[ 3 ] - i) != '#'
+					&& board[ pos[ 2 ] ].charAt(pos[ 3 ] - i) != 'r'
+					&& board[ pos[ 2 ] ].charAt(pos[ 3 ] - i) != 'g') {
 				counter4++;
 				i++;
 			}
-			
-			/*See whitch way is the best one*/
+
+			/* See whitch way is the best one */
 			int way;
-			if(counter1 > counter2 && counter1 > counter3 && counter1 > counter4){
-				way=0; /*Down*/
-			}else if(counter2 > counter1 && counter2 > counter3 && counter2 > counter4)
-				way=1; /*Up*/
-			else if(counter3 > counter2 && counter3 > counter1 && counter3 > counter4)
-				way=2; /*Right*/
-			else way=3; /*Left*/
-			
-			/*Print the best way to go*/
-			switch(way){
-			case 0 : System.out.println("DOWN");
-			case 1 : System.out.println("UP");
-			case 2 : System.out.println("RIGHT");
-			default: System.out.println("LEFT");
+			if (counter1 > counter2 && counter1 > counter3 && counter1 > counter4) {
+				way = 0; /* Down */
 			}
-			
+			else if (counter2 > counter1 && counter2 > counter3 && counter2 > counter4)
+				way = 1; /* Up */
+			else if (counter3 > counter2 && counter3 > counter1 && counter3 > counter4)
+				way = 2; /* Right */
+			else
+				way = 3; /* Left */
+
+			/* Print the best way to go */
+			switch (way) {
+			case 0:
+				System.out.println("DOWN");
+				break;
+			case 1:
+				System.out.println("UP");
+				break;
+			case 2:
+				System.out.println("RIGHT");
+				break;
+			default:
+				System.out.println("LEFT");
+				break;
+			}
+
 		}
 
 	}
