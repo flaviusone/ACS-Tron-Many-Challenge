@@ -1,0 +1,14 @@
+- functie care calculeaza distanta dintre motociclete
+- functie care monitorizeaza capatul motocicletei adverse
+- functie negamax cu 3-5-8-10-12 pasi
+- functie alfa beta pruning  (just in case)
+- functie evaluare scor:
+		-parcurgere tabla si numarare mutari posibile cu atriburirea unor nr de
+		spatii albe fiecarui jucator
+- functie de checkblock, verifica daca jucatorul e blocat intr-o suprafata gen
+camera
+- functie de count_exit, care verifica posibilitati de vizitare a unor camere
+- functie de survival care umple spatiul ramas accesibil in mod optim
+- functie sugar_rush care se duce orbeste catre botul adversar
+- functie rational scout care iese dintr-o camera blocand una sau mai multe 
+iesiri (in functie de parametrii)
