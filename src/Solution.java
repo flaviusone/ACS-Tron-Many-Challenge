@@ -22,7 +22,7 @@ public class Solution {
 			/* Search Up */
 			i = 1;
 			aux = getCharAtXY(board, r_x - i, r_y);
-			while (aux != '#' && aux != 'r' && aux != 'g') {
+			while (aux != '#' && aux != 'r' && aux != 'g') {	
 				counter2++;
 				i++;
 				aux = getCharAtXY(board, r_x - i, r_y);
@@ -115,6 +115,11 @@ public class Solution {
 		return board[ x ].charAt(y);
 	}
 
+	static long getTime()
+	{
+		return System.currentTimeMillis();
+	}
+	
 	static void nextMove(String player, int[] pos, String[] board) {
 		Longest_way_bot(player, pos, board);
 	}
@@ -145,5 +150,7 @@ public class Solution {
 		}
 
 		nextMove(player, position, board);
+		
+		
 	}
 }
