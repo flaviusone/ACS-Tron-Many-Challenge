@@ -6,7 +6,7 @@ import java.util.regex.*;
 
 public class Solution {
 	/* Head ends here */
-	static void nextMove(String player, int[] pos, String[] board) {
+	static void Longest_way_bot(String player, int[] pos, String[] board) {
 		int counter1 = 0, counter2 = 0, counter3 = 0, counter4 = 0, i;
 		if (player.equals("r")) {
 			/* Search Down */
@@ -135,6 +135,10 @@ public class Solution {
 
 		}
 
+	}
+
+	static void nextMove(String player, int[] pos, String[] board) {
+		Longest_way_bot(player, pos, board);
 	}
 
 	/* Tail starts here */
