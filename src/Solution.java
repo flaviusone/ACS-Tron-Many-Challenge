@@ -29,7 +29,7 @@ public class Solution {
 			
 			/* Adauga pt fiecare nod in parte indecsii vecinilor lui*/
 			for(int i = 1 ; i < board.length-1 ; i ++)
-				for(int j = 1 ; j< board[1].length()-1 ; j++){
+				for(int j = 1 ; j< board[1].length()-2 ; j++){
 					
 					Node a = new Node(index,i,j);
 					
@@ -60,10 +60,6 @@ public class Solution {
 					n.neighbours.add(Nodes.get(x));
 				}
 			}
-			
-			
-			
-
 		}
 
 		public int nodeCount() {
@@ -76,6 +72,8 @@ public class Solution {
 
 		public String toString() {
 			String res = "Graph\n";
+			res += "Red= " + this.red.index + "\n";
+			res += "Green= " + this.green.index + "\n";
 			for (Node n : Nodes) {
 				res += n.toString();
 				res += "\n";
@@ -331,8 +329,7 @@ public class Solution {
 		String[] str_pos = pos.split(" ");
 		int[] position = new int[4];
 		int[] sizes = new int[2];
-		
-		
+
 		for (int i = 0; i < 4; i++) {
 			position[i] = Integer.parseInt(str_pos[i]);
 		}
