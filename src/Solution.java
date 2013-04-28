@@ -6,66 +6,7 @@ import java.util.regex.*;
 
 public class Solution {
 	/* Head ends here */
-	static void survival(String player, int[] pos, String[] board) {
-		int r_x = pos[0], r_y = pos[1], g_x = pos[2], g_y = pos[3];
-		int way = 0;
-		char aux;
-		if (player.equals("r")) {
-			/* try to go after the wall. go kind of right */
-
-			aux = getCharAtXY(board, r_x, r_y - 1);
-			way = -1;
-			// try left
-			if (aux != '#' && aux != 'r' && aux != 'g')
-				way = 3;
-			else {
-				aux = getCharAtXY(board, r_x - 1, r_y);
-				if (aux != '#' && aux != 'r' && aux != 'g')
-					way = 2;
-				else {
-					aux = getCharAtXY(board, r_x, r_y + 1);
-					if (aux != '#' && aux != 'r' && aux != 'g')
-						way = 1;
-					else
-						way = 0;
-				}
-			}
-		} else {// player == 'g'
-			way = -1;
-			aux = getCharAtXY(board, g_x, g_y + 1);
-			if (aux != '#' && aux != 'r' && aux != 'g')
-				way = 1;
-			else {
-				aux = getCharAtXY(board, g_x + 1, g_y);
-				if (aux != '#' && aux != 'r' && aux != 'g') {
-					way = 0;
-				} else {
-					aux = getCharAtXY(board, g_x, g_y - 1);
-					if (aux != '#' && aux != 'r' && aux != 'g')
-						way = 3;
-					else
-						way = 2;
-				}
-			}
-		}
-
-		/* Print the best way to go */
-		switch (way) {
-		case 0:
-			System.out.println("DOWN");
-			break;
-		case 1:
-			System.out.println("RIGHT");
-			break;
-		case 2:
-			System.out.println("UP");
-			break;
-		default:
-			System.out.println("LEFT");
-			break;
-		}
-	}
-
+	
 	static void Longest_way_bot(String player, int[] pos, String[] board) {
 		int counter1 = 0, counter2 = 0, counter3 = 0, counter4 = 0, i;
 		int r_x = pos[ 0 ], r_y = pos[ 1 ], g_x = pos[ 2 ], g_y = pos[ 3 ];
@@ -89,19 +30,19 @@ public class Solution {
 			}
 			/* Search Right */
 			i = 1;
-			aux = getCharAtXY(board, r_x - i, r_y + i);
+			aux = getCharAtXY(board, r_x, r_y + i);
 			while (aux != '#' && aux != 'r' && aux != 'g') {
 				counter3++;
 				i++;
-				aux = getCharAtXY(board, r_x - i, r_y + i);
+				aux = getCharAtXY(board, r_x, r_y + i);
 			}
 			/* Search Left */
 			i = 1;
-			aux = getCharAtXY(board, r_x - i, r_y - i);
+			aux = getCharAtXY(board, r_x, r_y - i);
 			while (aux != '#' && aux != 'r' && aux != 'g') {
 				counter4++;
 				i++;
-				aux = getCharAtXY(board, r_x - i, r_y - i);
+				aux = getCharAtXY(board, r_x, r_y - i);
 			}
 
 		}
@@ -124,19 +65,19 @@ public class Solution {
 			}
 			/* Search Right */
 			i = 1;
-			aux = getCharAtXY(board, g_x - i, g_y + i);
+			aux = getCharAtXY(board, g_x, g_y + i);
 			while (aux != '#' && aux != 'r' && aux != 'g') {
 				counter3++;
 				i++;
-				aux = getCharAtXY(board, g_x - i, g_y + i);
+				aux = getCharAtXY(board, g_x, g_y + i);
 			}
 			/* Search Left */
 			i = 1;
-			aux = getCharAtXY(board, g_x - i, g_y - i);
+			aux = getCharAtXY(board, g_x, g_y - i);
 			while (aux != '#' && aux != 'r' && aux != 'g') {
 				counter4++;
 				i++;
-				aux = getCharAtXY(board, g_x - i, g_y - i);
+				aux = getCharAtXY(board, g_x, g_y - i);
 			}
 
 		}
