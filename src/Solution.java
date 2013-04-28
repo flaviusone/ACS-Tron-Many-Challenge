@@ -30,16 +30,50 @@ public class Solution {
 			 * if(pos[2] == 23 && pos[3] == 13){ green = new Node(1, Color.GREEN); Nodes.add(green);
 			 * }
 			 */
-
-			Node a = new Node(0, 1, 1);
-			initiateNeighbours(a, board, 0);
+			int index = 0;
+			
+			for(int i = 1 ; i < board.length-2 ; i ++)
+				for(int j = 1 ; j< board[1].length()-2 ; j++){
+					Node a = new Node(index,i,j);
+					if (getCharAtXY(board, i - 1, j) == '-') {
+						a.neighbours_by_index.add(index - (board[1].length()-2));
+					}
+					if (getCharAtXY(board, i + 1, j) == '-') {
+						if(index+(board[1].length()-2) == 286){
+							System.out.println("wtf baa ?");
+							System.out.println(i+" "+j);
+							System.out.println(index);
+							System.out.println(board[1].length()-2);
+							}
+						a.neighbours_by_index.add(index + (board[1].length()-2));
+					}
+					if (getCharAtXY(board, i, j - 1) == '-') {
+						a.neighbours_by_index.add(index - 1);
+					}
+					if (getCharAtXY(board, i, j + 1) == '-') {
+						if(index+1 == 286)
+							System.out.println("wtf baa ?");
+						a.neighbours_by_index.add(index +1);
+					}
+					Nodes.add(a);
+					index++;
+				}
+			System.out.println(index);
+			for (Node n : Nodes){
+				for(int x : n.neighbours_by_index){
+					n.neighbours.add(Nodes.get(x));
+				}
+			}
+			
+			
+			
 
 		}
-
+/*
 		public void initiateNeighbours(Node node, String[] board, int index) {
 			if (node.initiated == false) {
-				Nodes.add(node);
 				node.initiate();
+				Nodes.add(node);
 				if (getCharAtXY(board, node.x - 1, node.y) == '-') {
 					Node a = new Node(index + 1, node.x - 1, node.y);
 					node.neighbours.add(a);
@@ -62,12 +96,12 @@ public class Solution {
 				}
 
 				for (Node n : node.neighbours) {
-					initiateNeighbours(n, board, index);
+					initiateNeighbours(n, board, index+1);
 					index = index + n.neighbours.size();
 				}
 			}
 		}
-
+*/
 		public int nodeCount() {
 			return Nodes.size();
 		}
@@ -93,10 +127,13 @@ public class Solution {
 		int x, y;
 		boolean initiated;
 		ArrayList<Node> neighbours = new ArrayList<Node>();
+		ArrayList<Integer> neighbours_by_index = new ArrayList<Integer>();
+		
 		Color culoare;
 
 		public Node(int index, int x, int y) {
 			this.index = index;
+			culoare = Color.ALB; 
 			initiated = false;
 			this.x = x;
 			this.y = y;
@@ -131,10 +168,17 @@ public class Solution {
 		public String toString() {
 			String res = "Node index = ";
 			res += Integer.toString(index) + " si culoare = " + culoare.toString() + "\n";
+			res += "Coordonate: x=" + this.x + " y=" + this.y + " \n";
 			res += "Vecini: ";
+			/*
 			for (int i = 0; i < neighbours.size(); i++) {
 				res += Integer.toString(neighbours.get(i).index) + ", ";
 			}
+			/**/
+			for (int i = 0; i < neighbours_by_index.size(); i++) {
+				res += Integer.toString(neighbours_by_index.get(i)) + ", ";
+			}
+			
 			return res;
 		}
 
@@ -312,7 +356,13 @@ public class Solution {
 	}
 
 	static void nextMove(String player, int[] pos, String[] board) {
-		Longest_way_bot(player, pos, board);
+		
+		//Longest_way_bot(player, pos, board);
+		Solution sol = new Solution();
+		Solution.Graph g = sol.new Graph(player, pos, board);
+		System.out.println(g.toString());
+		
+		
 	}
 
 	/* Tail starts here */
@@ -324,7 +374,8 @@ public class Solution {
 		String[] str_pos = pos.split(" ");
 		int[] position = new int[4];
 		int[] sizes = new int[2];
-
+		
+		
 		for (int i = 0; i < 4; i++) {
 			position[i] = Integer.parseInt(str_pos[i]);
 		}
