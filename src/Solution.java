@@ -91,19 +91,19 @@ public class Solution {
 			}
 			/* Search Right */
 			i = 1;
-			aux = getCharAtXY(board, r_x - i, r_y + i);
+			aux = getCharAtXY(board, r_x, r_y + i);
 			while (aux != '#' && aux != 'r' && aux != 'g') {
 				counter3++;
 				i++;
-				aux = getCharAtXY(board, r_x - i, r_y + i);
+				aux = getCharAtXY(board, r_x, r_y + i);
 			}
 			/* Search Left */
 			i = 1;
-			aux = getCharAtXY(board, r_x - i, r_y - i);
+			aux = getCharAtXY(board, r_x, r_y - i);
 			while (aux != '#' && aux != 'r' && aux != 'g') {
 				counter4++;
 				i++;
-				aux = getCharAtXY(board, r_x - i, r_y - i);
+				aux = getCharAtXY(board, r_x, r_y - i);
 			}
 
 		}
@@ -126,19 +126,19 @@ public class Solution {
 			}
 			/* Search Right */
 			i = 1;
-			aux = getCharAtXY(board, g_x - i, g_y + i);
+			aux = getCharAtXY(board, g_x, g_y + i);
 			while (aux != '#' && aux != 'r' && aux != 'g') {
 				counter3++;
 				i++;
-				aux = getCharAtXY(board, g_x - i, g_y + i);
+				aux = getCharAtXY(board, g_x, g_y + i);
 			}
 			/* Search Left */
 			i = 1;
-			aux = getCharAtXY(board, g_x - i, g_y - i);
+			aux = getCharAtXY(board, g_x, g_y - i);
 			while (aux != '#' && aux != 'r' && aux != 'g') {
 				counter4++;
 				i++;
-				aux = getCharAtXY(board, g_x - i, g_y - i);
+				aux = getCharAtXY(board, g_x, g_y - i);
 			}
 
 		}
