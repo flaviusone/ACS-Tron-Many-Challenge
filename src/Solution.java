@@ -13,58 +13,105 @@ public class Solution {
 	public enum Color {
 		ALB, GRI, NEGRU, RED, GREEN, WALL
 	}
-	
-	public class Graph{
-	/*
-	 * Un fel de pseudo graph defapt pt ca nu am perechi de <nod,lista de vecini> ci
-	 * doar o lista de noduri care contine vecinii in el.
-	 * 
-	 * Face graful pe baza matricei de stringuri .
-	 */
+
+	public class Graph {
+		/*
+		 * Un fel de pseudo graph defapt pt ca nu am perechi de <nod,lista de vecini> ci doar o
+		 * lista de noduri care contine vecinii in el.
+		 * 
+		 * Face graful pe baza matricei de stringuri .
+		 */
 		ArrayList<Node> Nodes = new ArrayList<Node>();
-		Node red,green; /*nodurile curente pt cei 2 playeri*/
-		
-		
-		
-		public int nodeCount()
-		{
+		Node red, green; /* nodurile curente pt cei 2 playeri */
+
+		public Graph(String player, int[] pos, String[] board) {
+			/*
+			 * if(pos[0] == 1 && pos[1] == 1){ red = new Node(0, Color.RED); Nodes.add(red); }
+			 * if(pos[2] == 23 && pos[3] == 13){ green = new Node(1, Color.GREEN); Nodes.add(green);
+			 * }
+			 */
+
+			Node a = new Node(0, 1, 1);
+			initiateNeighbours(a, board, 0);
+
+		}
+
+		public void initiateNeighbours(Node node, String[] board, int index) {
+			if (node.initiated == false) {
+				Nodes.add(node);
+				node.initiate();
+				if (getCharAtXY(board, node.x - 1, node.y) == '-') {
+					Node a = new Node(index + 1, node.x - 1, node.y);
+					node.neighbours.add(a);
+					index++;
+				}
+				if (getCharAtXY(board, node.x + 1, node.y) == '-') {
+					Node a = new Node(index + 1, node.x + 1, node.y);
+					node.neighbours.add(a);
+					index++;
+				}
+				if (getCharAtXY(board, node.x, node.y - 1) == '-') {
+					Node a = new Node(index + 1, node.x, node.y - 1);
+					node.neighbours.add(a);
+					index++;
+				}
+				if (getCharAtXY(board, node.x, node.y + 1) == '-') {
+					Node a = new Node(index + 1, node.x, node.y + 1);
+					node.neighbours.add(a);
+					index++;
+				}
+
+				for (Node n : node.neighbours) {
+					initiateNeighbours(n, board, index);
+					index = index + n.neighbours.size();
+				}
+			}
+		}
+
+		public int nodeCount() {
 			return Nodes.size();
 		}
-		
-		public ArrayList< Node > getNodes()
-		{
+
+		public ArrayList<Node> getNodes() {
 			return Nodes;
 		}
-		
-		public String toString()
-		{
+
+		public String toString() {
 			String res = "Graph\n";
-			for (Node n : Nodes){
+			for (Node n : Nodes) {
 				res += n.toString();
 				res += "\n";
 			}
 			return res;
 		}
-		
+
 	}
-	
-	/* Node class*/
+
+	/* Node class */
 	public class Node {
 		int index;
+		int x, y;
 		boolean initiated;
 		ArrayList<Node> neighbours = new ArrayList<Node>();
 		Color culoare;
 
-		public Node(int index,Color culoare){
+		public Node(int index, int x, int y) {
+			this.index = index;
+			initiated = false;
+			this.x = x;
+			this.y = y;
+		}
+
+		public Node(int index, Color culoare) {
 			this.index = index;
 			this.culoare = culoare;
 			initiated = false;
 		}
-		
-		public void initiate(){
+
+		public void initiate() {
 			initiated = true;
 		}
-		
+
 		public int getIndex() {
 			return index;
 		}
@@ -81,18 +128,16 @@ public class Solution {
 			return neighbours;
 		}
 
-		public String toString()
-		{
+		public String toString() {
 			String res = "Node index = ";
-			res += Integer.toString(index) + " si culoare = " + culoare.toString() +  "\n";
+			res += Integer.toString(index) + " si culoare = " + culoare.toString() + "\n";
 			res += "Vecini: ";
-			for(int i = 0 ; i < neighbours.size() ; i++ )
-			{
-			res += Integer.toString(neighbours.get(i).index) + ", ";
+			for (int i = 0; i < neighbours.size(); i++) {
+				res += Integer.toString(neighbours.get(i).index) + ", ";
 			}
 			return res;
 		}
-		
+
 	}
 
 	static void survival(String player, int[] pos, String[] board) {
