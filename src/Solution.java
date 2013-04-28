@@ -6,6 +6,95 @@ import java.util.regex.*;
 
 public class Solution {
 	/* Head ends here */
+
+	/*
+	 * Culori pentru alg de BFS Probabil nu vm avea nevoie de toate
+	 */
+	public enum Color {
+		ALB, GRI, NEGRU, RED, GREEN, WALL
+	}
+	
+	public class Graph{
+	/*
+	 * Un fel de pseudo graph defapt pt ca nu am perechi de <nod,lista de vecini> ci
+	 * doar o lista de noduri care contine vecinii in el.
+	 * 
+	 * Face graful pe baza matricei de stringuri .
+	 */
+		ArrayList<Node> Nodes = new ArrayList<Node>();
+		Node red,green; /*nodurile curente pt cei 2 playeri*/
+		
+		
+		
+		public int nodeCount()
+		{
+			return Nodes.size();
+		}
+		
+		public ArrayList< Node > getNodes()
+		{
+			return Nodes;
+		}
+		
+		public String toString()
+		{
+			String res = "Graph\n";
+			for (Node n : Nodes){
+				res += n.toString();
+				res += "\n";
+			}
+			return res;
+		}
+		
+	}
+	
+	/* Node class*/
+	public class Node {
+		int index;
+		boolean initiated;
+		ArrayList<Node> neighbours = new ArrayList<Node>();
+		Color culoare;
+
+		public Node(int index,Color culoare){
+			this.index = index;
+			this.culoare = culoare;
+			initiated = false;
+		}
+		
+		public void initiate(){
+			initiated = true;
+		}
+		
+		public int getIndex() {
+			return index;
+		}
+
+		public Color getColor() {
+			return culoare;
+		}
+
+		public void setColor(Color x) {
+			this.culoare = x;
+		}
+
+		public ArrayList<Node> getNeighbours() {
+			return neighbours;
+		}
+
+		public String toString()
+		{
+			String res = "Node index = ";
+			res += Integer.toString(index) + " si culoare = " + culoare.toString() +  "\n";
+			res += "Vecini: ";
+			for(int i = 0 ; i < neighbours.size() ; i++ )
+			{
+			res += Integer.toString(neighbours.get(i).index) + ", ";
+			}
+			return res;
+		}
+		
+	}
+
 	static void survival(String player, int[] pos, String[] board) {
 		int r_x = pos[0], r_y = pos[1], g_x = pos[2], g_y = pos[3];
 		int way = 0;
@@ -30,8 +119,7 @@ public class Solution {
 						way = 0;
 				}
 			}
-		}
-		else {// player == 'g'
+		} else {// player == 'g'
 			way = -1;
 			aux = getCharAtXY(board, g_x, g_y + 1);
 			if (aux != '#' && aux != 'r' && aux != 'g')
@@ -40,8 +128,7 @@ public class Solution {
 				aux = getCharAtXY(board, g_x + 1, g_y);
 				if (aux != '#' && aux != 'r' && aux != 'g') {
 					way = 0;
-				}
-				else {
+				} else {
 					aux = getCharAtXY(board, g_x, g_y - 1);
 					if (aux != '#' && aux != 'r' && aux != 'g')
 						way = 3;
@@ -106,8 +193,7 @@ public class Solution {
 				aux = getCharAtXY(board, r_x - i, r_y - i);
 			}
 
-		}
-		else {
+		} else {
 			/* Search Down */
 			i = 1;
 			aux = getCharAtXY(board, g_x + i, g_y);
@@ -147,8 +233,7 @@ public class Solution {
 		int way;
 		if (counter1 >= counter2 && counter1 >= counter3 && counter1 >= counter4) {
 			way = 0; /* Down */
-		}
-		else if (counter2 >= counter1 && counter2 >= counter3 && counter2 >= counter4)
+		} else if (counter2 >= counter1 && counter2 >= counter3 && counter2 >= counter4)
 			way = 1; /* Up */
 		else if (counter3 >= counter2 && counter3 >= counter1 && counter3 >= counter4)
 			way = 2; /* Right */
