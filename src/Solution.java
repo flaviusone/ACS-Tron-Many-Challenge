@@ -319,13 +319,14 @@ public class Solution {
 		Node s2 = g.green;
 		Node u1,u2;
 		int arie1=1,arie2=1;
-		
+	
 		/* incepem prelucrearea nodurilor deci culoare devine gri*/
 		s1.culoare = Color.GRI;
 		s2.culoare = Color.GRI;
 		
 		/* Initializare cele 2 cozi */
-		Queue<Node> q1 = null,q2 = null;
+		Queue<Node> q1 = new LinkedList<Node>();
+		Queue<Node> q2 = new LinkedList<Node>();
 		q1.add(s1);
 		q2.add(s2);
 		
