@@ -25,40 +25,36 @@ public class Solution {
 		Node red, green; /* nodurile curente pt cei 2 playeri */
 
 		public Graph(String player, int[] pos, String[] board) {
-			/*
-			 * if(pos[0] == 1 && pos[1] == 1){ red = new Node(0, Color.RED); Nodes.add(red); }
-			 * if(pos[2] == 23 && pos[3] == 13){ green = new Node(1, Color.GREEN); Nodes.add(green);
-			 * }
-			 */
 			int index = 0;
 			
-			for(int i = 1 ; i < board.length-2 ; i ++)
-				for(int j = 1 ; j< board[1].length()-2 ; j++){
+			/* Adauga pt fiecare nod in parte indecsii vecinilor lui*/
+			for(int i = 1 ; i < board.length-1 ; i ++)
+				for(int j = 1 ; j< board[1].length()-1 ; j++){
+					
 					Node a = new Node(index,i,j);
+					
+					if(i == pos[0] && j == pos[1])
+						red = a;
+					if(i == pos[2] && j == pos[3])
+						green = a;
+					
+					
 					if (getCharAtXY(board, i - 1, j) == '-') {
 						a.neighbours_by_index.add(index - (board[1].length()-2));
 					}
 					if (getCharAtXY(board, i + 1, j) == '-') {
-						if(index+(board[1].length()-2) == 286){
-							System.out.println("wtf baa ?");
-							System.out.println(i+" "+j);
-							System.out.println(index);
-							System.out.println(board[1].length()-2);
-							}
 						a.neighbours_by_index.add(index + (board[1].length()-2));
 					}
 					if (getCharAtXY(board, i, j - 1) == '-') {
 						a.neighbours_by_index.add(index - 1);
 					}
 					if (getCharAtXY(board, i, j + 1) == '-') {
-						if(index+1 == 286)
-							System.out.println("wtf baa ?");
 						a.neighbours_by_index.add(index +1);
 					}
 					Nodes.add(a);
 					index++;
 				}
-			System.out.println(index);
+			/* Se foloseste de indecsii gasiti anterior ca sa adauge nodurile reale*/
 			for (Node n : Nodes){
 				for(int x : n.neighbours_by_index){
 					n.neighbours.add(Nodes.get(x));
@@ -69,39 +65,7 @@ public class Solution {
 			
 
 		}
-/*
-		public void initiateNeighbours(Node node, String[] board, int index) {
-			if (node.initiated == false) {
-				node.initiate();
-				Nodes.add(node);
-				if (getCharAtXY(board, node.x - 1, node.y) == '-') {
-					Node a = new Node(index + 1, node.x - 1, node.y);
-					node.neighbours.add(a);
-					index++;
-				}
-				if (getCharAtXY(board, node.x + 1, node.y) == '-') {
-					Node a = new Node(index + 1, node.x + 1, node.y);
-					node.neighbours.add(a);
-					index++;
-				}
-				if (getCharAtXY(board, node.x, node.y - 1) == '-') {
-					Node a = new Node(index + 1, node.x, node.y - 1);
-					node.neighbours.add(a);
-					index++;
-				}
-				if (getCharAtXY(board, node.x, node.y + 1) == '-') {
-					Node a = new Node(index + 1, node.x, node.y + 1);
-					node.neighbours.add(a);
-					index++;
-				}
 
-				for (Node n : node.neighbours) {
-					initiateNeighbours(n, board, index+1);
-					index = index + n.neighbours.size();
-				}
-			}
-		}
-*/
 		public int nodeCount() {
 			return Nodes.size();
 		}
@@ -125,7 +89,6 @@ public class Solution {
 	public class Node {
 		int index;
 		int x, y;
-		boolean initiated;
 		ArrayList<Node> neighbours = new ArrayList<Node>();
 		ArrayList<Integer> neighbours_by_index = new ArrayList<Integer>();
 		
@@ -134,7 +97,6 @@ public class Solution {
 		public Node(int index, int x, int y) {
 			this.index = index;
 			culoare = Color.ALB; 
-			initiated = false;
 			this.x = x;
 			this.y = y;
 		}
@@ -142,11 +104,6 @@ public class Solution {
 		public Node(int index, Color culoare) {
 			this.index = index;
 			this.culoare = culoare;
-			initiated = false;
-		}
-
-		public void initiate() {
-			initiated = true;
 		}
 
 		public int getIndex() {
@@ -170,15 +127,15 @@ public class Solution {
 			res += Integer.toString(index) + " si culoare = " + culoare.toString() + "\n";
 			res += "Coordonate: x=" + this.x + " y=" + this.y + " \n";
 			res += "Vecini: ";
-			/*
+			
 			for (int i = 0; i < neighbours.size(); i++) {
 				res += Integer.toString(neighbours.get(i).index) + ", ";
 			}
-			/**/
+			/*
 			for (int i = 0; i < neighbours_by_index.size(); i++) {
 				res += Integer.toString(neighbours_by_index.get(i)) + ", ";
 			}
-			
+			*/
 			return res;
 		}
 
