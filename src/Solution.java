@@ -309,14 +309,105 @@ public class Solution {
 	static long getTime() {
 		return System.currentTimeMillis();
 	}
+	
+	static int BFS(String player, int[] pos, String[] board){
+		Solution sol = new Solution();
+		Solution.Graph g = sol.new Graph(player, pos, board);
+		
+		/* noduri de inceput pt bfs */
+		Node s1 = g.red;
+		Node s2 = g.green;
+		Node u1,u2;
+		int arie1=1,arie2=1;
+		
+		/* incepem prelucrearea nodurilor deci culoare devine gri*/
+		s1.culoare = Color.GRI;
+		s2.culoare = Color.GRI;
+		
+		/* Initializare cele 2 cozi */
+		Queue<Node> q1 = null,q2 = null;
+		q1.add(s1);
+		q2.add(s2);
+		
+		while(!q1.isEmpty() && !q2.isEmpty())
+		{
+			u1 = q1.poll();
+			u2 = q2.poll();
+			
+			/* pentru toti vecinii */
+			for(Node v : u1.neighbours)
+			{
+				if(v.culoare == Color.ALB)
+				{
+					v.culoare = Color.GREEN;
+					arie1++;
+					q1.add(v);
+				}
+			}
+			
+			u1.culoare = Color.NEGRU;
+			
+			/* pentru toti vecinii */
+			for(Node v : u2.neighbours)
+			{
+				if(v.culoare == Color.ALB)
+				{
+					v.culoare = Color.GREEN;
+					arie2++;
+					q2.add(v);
+				}
+			}
+			
+			u2.culoare = Color.NEGRU;
+			
+		}
+		
+		/* daca se termina prematur q1 */
+		if(q1.isEmpty()){
+			while(!q2.isEmpty())
+			{
+				u2 = q2.poll();
+				
+				/* pentru toti vecinii */
+				for(Node v : u2.neighbours)
+				{
+					if(v.culoare == Color.ALB)
+					{
+						v.culoare = Color.GREEN;
+						arie2++;
+						q2.add(v);
+					}
+				}
+				
+				u2.culoare = Color.NEGRU;
+			}
+		}
+		if(q2.isEmpty()){
+			while(!q1.isEmpty())
+			{
+				u1 = q1.poll();
+				
+				/* pentru toti vecinii */
+				for(Node v : u1.neighbours)
+				{
+					if(v.culoare == Color.ALB)
+					{
+						v.culoare = Color.GREEN;
+						arie1++;
+						q2.add(v);
+					}
+				}
+				
+				u1.culoare = Color.NEGRU;
+			}
+		}
+		
+		return arie1-arie2;
+	}
 
 	static void nextMove(String player, int[] pos, String[] board) {
 		
-		//Longest_way_bot(player, pos, board);
-		Solution sol = new Solution();
-		Solution.Graph g = sol.new Graph(player, pos, board);
-		System.out.println(g.toString());
-		
+		System.out.println(BFS( player,  pos, board));
 		
 	}
 
