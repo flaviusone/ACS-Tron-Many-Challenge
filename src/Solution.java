@@ -30,7 +30,8 @@ public class Solution {
 						way = 0;
 				}
 			}
-		} else {// player == 'g'
+		}
+		else {// player == 'g'
 			way = -1;
 			aux = getCharAtXY(board, g_x, g_y + 1);
 			if (aux != '#' && aux != 'r' && aux != 'g')
@@ -39,7 +40,8 @@ public class Solution {
 				aux = getCharAtXY(board, g_x + 1, g_y);
 				if (aux != '#' && aux != 'r' && aux != 'g') {
 					way = 0;
-				} else {
+				}
+				else {
 					aux = getCharAtXY(board, g_x, g_y - 1);
 					if (aux != '#' && aux != 'r' && aux != 'g')
 						way = 3;
@@ -68,7 +70,7 @@ public class Solution {
 
 	static void Longest_way_bot(String player, int[] pos, String[] board) {
 		int counter1 = 0, counter2 = 0, counter3 = 0, counter4 = 0, i;
-		int r_x = pos[ 0 ], r_y = pos[ 1 ], g_x = pos[ 2 ], g_y = pos[ 3 ];
+		int r_x = pos[0], r_y = pos[1], g_x = pos[2], g_y = pos[3];
 		char aux;
 		if (player.equals("r")) {
 			/* Search Down */
@@ -82,7 +84,7 @@ public class Solution {
 			/* Search Up */
 			i = 1;
 			aux = getCharAtXY(board, r_x - i, r_y);
-			while (aux != '#' && aux != 'r' && aux != 'g') {	
+			while (aux != '#' && aux != 'r' && aux != 'g') {
 				counter2++;
 				i++;
 				aux = getCharAtXY(board, r_x - i, r_y);
@@ -172,14 +174,13 @@ public class Solution {
 	}
 
 	static char getCharAtXY(String[] board, int x, int y) {
-		return board[ x ].charAt(y);
+		return board[x].charAt(y);
 	}
 
-	static long getTime()
-	{
+	static long getTime() {
 		return System.currentTimeMillis();
 	}
-	
+
 	static void nextMove(String player, int[] pos, String[] board) {
 		Longest_way_bot(player, pos, board);
 	}
@@ -195,22 +196,21 @@ public class Solution {
 		int[] sizes = new int[2];
 
 		for (int i = 0; i < 4; i++) {
-			position[ i ] = Integer.parseInt(str_pos[ i ]);
+			position[i] = Integer.parseInt(str_pos[i]);
 		}
 		pos = in.next();
 		str_pos = pos.split(" ");
 		for (int i = 0; i < 2; i++) {
-			sizes[ i ] = Integer.parseInt(str_pos[ i ]);
+			sizes[i] = Integer.parseInt(str_pos[i]);
 		}
 
-		String board[] = new String[sizes[ 0 ]];
+		String board[] = new String[sizes[0]];
 
-		for (int i = 0; i < sizes[ 0 ]; i++) {
-			board[ i ] = in.next();
+		for (int i = 0; i < sizes[0]; i++) {
+			board[i] = in.next();
 		}
 
 		nextMove(player, position, board);
-		
-		
+
 	}
 }
