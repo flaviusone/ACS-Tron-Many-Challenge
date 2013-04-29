@@ -53,38 +53,63 @@ public class Solution {
 		} else {
 			String player2;
 			for (int i = 0; i < 4; i++) {
-				if (player == "g") {
+				
+				if (player.contains("g")) {
+					aux = getCharAtXY(board, pos[2] + directionsX.get(i), pos[3] + directionsY.get(i));
 					player2 = "r";
 				} else {
+					aux = getCharAtXY(board, pos[0] + directionsX.get(i), pos[1] + directionsY.get(i));
 					player2 = "g";
 				}
-				aux = getCharAtXY(board, pos[0] + directionsX.get(i), pos[1] + directionsY.get(i));
+				
 				if ((aux != 'r') && (aux != '#') && (aux != 'g')) {
 
-					if (player == "g") {
+					if (player.contains("g")) {
 						// marchez pentru verde directia pentru i actual.
 						board2 = copyBoard(board);
 						pos2 = copyPos(pos);
-						// inverseaza rahatul din pos2 eventual
-						pos2[0] = pos[2];
-						pos2[1] = pos[3];
+						switch (i) {
+						case 0:
+							pos2[2]++;
+							break;
+						case 1:
+							pos2[3]++;
+							break;
+						case 2:
+							pos2[2]--;
+							break;
+						case 3:
+							pos2[3]--;
+							break;
+						}
 						//
 
-						board2[g_x + directionsX.get(i)] = board[r_x + directionsX.get(i)]
-								.substring(0, r_y + directionsY.get(i))
+						board2[g_x + directionsX.get(i)] = board[g_x + directionsX.get(i)]
+								.substring(0, g_y + directionsY.get(i))
 								+ 'g'
-								+ board[r_x + directionsX.get(i)].substring(r_y + 1
+								+ board[g_x + directionsX.get(i)].substring(g_y + 1
 										+ directionsY.get(i));
 
 					} else {
 						board2 = copyBoard(board);
 						pos2 = copyPos(pos);
-						// inverseaza rahatul din pos2 eventual
-						pos2[0] = pos[2];
-						pos2[1] = pos[3];
-						//
 
-						board2[g_x + directionsX.get(i)] = board[r_x + directionsX.get(i)]
+						switch (i) {
+						case 0:
+							pos2[1]++;
+							break;
+						case 1:
+							pos2[0]++;
+							break;
+						case 2:
+							pos2[1]--;
+							break;
+						case 3:
+							pos2[0]--;
+							break;
+						}
+
+						board2[r_x + directionsX.get(i)] = board[r_x + directionsX.get(i)]
 								.substring(0, r_y + directionsY.get(i))
 								+ 'r'
 								+ board[r_x + directionsX.get(i)].substring(r_y + 1
@@ -656,7 +681,7 @@ public class Solution {
 		char aux;
 		String[] board2;
 		String player2;
-		int max=Integer.MIN_VALUE;
+		int max = Integer.MIN_VALUE;
 		int move = 0;
 		Vector<Integer> directionsX = new Vector<Integer>();
 		Vector<Integer> directionsY = new Vector<Integer>();
@@ -677,13 +702,11 @@ public class Solution {
 					// facem iar copy board cu marcare cu rosu directia aleasa
 					board2 = copyBoard(board);
 					// iar trebuie schimbat playerul
-					if (player.contains("g"))
-						player2 = "r";
-					else
-						player2 = "g";
+					//zic direct ca stiu cine sunt din iful principal
+					player2 = "g";
 					// si schimbam si vectorul poz
 					pos2 = copyPos(pos);
-					
+
 					switch (i) {
 					case 0:
 						pos2[1]++;
@@ -718,13 +741,11 @@ public class Solution {
 					// facem iar copy board cu marcare cu rosu directia aleasa
 					board2 = copyBoard(board);
 					// iar trebuie schimbat playerul
-					if (player.contains("g"))
-						player2 = "r";
-					else
-						player2 = "g";
+					//zic direct ca stiu cine sunt din iful principal
+					player2 = "r";
 					// si schimbam si vectorul poz
 					pos2 = copyPos(pos);
-					
+
 					switch (i) {
 					case 0:
 						pos2[3]++;
