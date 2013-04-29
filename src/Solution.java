@@ -26,37 +26,36 @@ public class Solution {
 
 		public Graph(String player, int[] pos, String[] board) {
 			int index = 0;
-			
-			/* Adauga pt fiecare nod in parte indecsii vecinilor lui*/
-			for(int i = 1 ; i < board.length-1 ; i ++)
-				for(int j = 1 ; j< board[1].length()-2 ; j++){
-					
-					Node a = new Node(index,i,j);
-					
-					if(i == pos[0] && j == pos[1])
+
+			/* Adauga pt fiecare nod in parte indecsii vecinilor lui */
+			for (int i = 1; i < board.length-1 ; i++)
+				for (int j = 1; j < board[1].length() - 2; j++) {
+
+					Node a = new Node(index, i, j);
+
+					if (i == pos[0] && j == pos[1])
 						red = a;
-					if(i == pos[2] && j == pos[3])
+					if (i == pos[2] && j == pos[3])
 						green = a;
-					
-					
+
 					if (getCharAtXY(board, i - 1, j) == '-') {
-						a.neighbours_by_index.add(index - (board[1].length()-2));
+						a.neighbours_by_index.add(index - (board[1].length() - 3));//trebuei umblat p aici
 					}
 					if (getCharAtXY(board, i + 1, j) == '-') {
-						a.neighbours_by_index.add(index + (board[1].length()-2));
+						a.neighbours_by_index.add(index + (board[1].length() - 3));
 					}
 					if (getCharAtXY(board, i, j - 1) == '-') {
 						a.neighbours_by_index.add(index - 1);
 					}
 					if (getCharAtXY(board, i, j + 1) == '-') {
-						a.neighbours_by_index.add(index +1);
+						a.neighbours_by_index.add(index + 1);
 					}
 					Nodes.add(a);
 					index++;
 				}
-			/* Se foloseste de indecsii gasiti anterior ca sa adauge nodurile reale*/
-			for (Node n : Nodes){
-				for(int x : n.neighbours_by_index){
+			/* Se foloseste de indecsii gasiti anterior ca sa adauge nodurile reale */
+			for (Node n : Nodes) {
+				for (int x : n.neighbours_by_index) {
 					n.neighbours.add(Nodes.get(x));
 				}
 			}
@@ -89,12 +88,12 @@ public class Solution {
 		int x, y;
 		ArrayList<Node> neighbours = new ArrayList<Node>();
 		ArrayList<Integer> neighbours_by_index = new ArrayList<Integer>();
-		
+
 		Color culoare;
 
 		public Node(int index, int x, int y) {
 			this.index = index;
-			culoare = Color.ALB; 
+			culoare = Color.ALB;
 			this.x = x;
 			this.y = y;
 		}
@@ -125,15 +124,14 @@ public class Solution {
 			res += Integer.toString(index) + " si culoare = " + culoare.toString() + "\n";
 			res += "Coordonate: x=" + this.x + " y=" + this.y + " \n";
 			res += "Vecini: ";
-			
+
 			for (int i = 0; i < neighbours.size(); i++) {
 				res += Integer.toString(neighbours.get(i).index) + ", ";
 			}
 			/*
-			for (int i = 0; i < neighbours_by_index.size(); i++) {
-				res += Integer.toString(neighbours_by_index.get(i)) + ", ";
-			}
-			*/
+			 * for (int i = 0; i < neighbours_by_index.size(); i++) { res +=
+			 * Integer.toString(neighbours_by_index.get(i)) + ", "; }
+			 */
 			return res;
 		}
 
@@ -309,106 +307,106 @@ public class Solution {
 	static long getTime() {
 		return System.currentTimeMillis();
 	}
-	
-	static int BFS(String player, int[] pos, String[] board){
+
+	static int BFS(String player, int[] pos, String[] board) {
 		Solution sol = new Solution();
 		Solution.Graph g = sol.new Graph(player, pos, board);
-		
 		/* noduri de inceput pt bfs */
 		Node s1 = g.red;
 		Node s2 = g.green;
-		Node u1,u2;
-		int arie1=1,arie2=1;
-	
-		/* incepem prelucrearea nodurilor deci culoare devine gri*/
+		Node u1, u2;
+		int arie1 = 1, arie2 = 1;
+
+		/* incepem prelucrearea nodurilor deci culoare devine gri */
 		s1.culoare = Color.GRI;
 		s2.culoare = Color.GRI;
-		
+
 		/* Initializare cele 2 cozi */
 		Queue<Node> q1 = new LinkedList<Node>();
 		Queue<Node> q2 = new LinkedList<Node>();
 		q1.add(s1);
 		q2.add(s2);
+ 
 		
-		while(!q1.isEmpty() && !q2.isEmpty())
-		{
+		
+		while (!q1.isEmpty() && !q2.isEmpty()) {
+			//printBoard(board);
+			
 			u1 = q1.poll();
 			u2 = q2.poll();
-			
+
 			/* pentru toti vecinii */
-			for(Node v : u1.neighbours)
-			{
-				if(v.culoare == Color.ALB)
-				{
-					v.culoare = Color.GREEN;
-					arie1++;
+			for (Node v : u1.neighbours) {
+				if (v.culoare == Color.ALB) {
+					v.culoare = Color.GRI;
+					// debug
+					//board[v.x] = board[v.x].substring(0, v.y) + 'G' + board[v.x].substring(v.y+1);
 					q1.add(v);
 				}
 			}
-			
+			arie1++;
 			u1.culoare = Color.NEGRU;
-			
+
 			/* pentru toti vecinii */
-			for(Node v : u2.neighbours)
-			{
-				if(v.culoare == Color.ALB)
-				{
-					v.culoare = Color.GREEN;
-					arie2++;
+			for (Node v : u2.neighbours) {
+				if (v.culoare == Color.ALB) {
+					v.culoare = Color.GRI;
+					//debug
+					//board[v.x] = board[v.x].substring(0, v.y) + 'G' + board[v.x].substring(v.y+1);
 					q2.add(v);
 				}
 			}
-			
+			arie2++;
 			u2.culoare = Color.NEGRU;
+
+			
 			
 		}
-		
+
 		/* daca se termina prematur q1 */
-		if(q1.isEmpty()){
-			while(!q2.isEmpty())
-			{
+		if (q1.isEmpty()) {
+			while (!q2.isEmpty()) {
 				u2 = q2.poll();
-				
+				arie2++;
 				/* pentru toti vecinii */
-				for(Node v : u2.neighbours)
-				{
-					if(v.culoare == Color.ALB)
-					{
-						v.culoare = Color.GREEN;
-						arie2++;
+				for (Node v : u2.neighbours) {
+					if (v.culoare == Color.ALB) {
+						v.culoare = Color.GRI;
 						q2.add(v);
 					}
 				}
-				
 				u2.culoare = Color.NEGRU;
 			}
 		}
-		if(q2.isEmpty()){
-			while(!q1.isEmpty())
-			{
+		if (q2.isEmpty()) {
+			while (!q1.isEmpty()) {
 				u1 = q1.poll();
-				
+				arie1++;
 				/* pentru toti vecinii */
-				for(Node v : u1.neighbours)
-				{
-					if(v.culoare == Color.ALB)
-					{
-						v.culoare = Color.GREEN;
-						arie1++;
+				for (Node v : u1.neighbours) {
+					if (v.culoare == Color.ALB) {
+						v.culoare = Color.GRI;
 						q2.add(v);
 					}
 				}
-				
 				u1.culoare = Color.NEGRU;
 			}
 		}
-		
-		return arie1-arie2;
+		return arie1 - 1 - arie2;
+	}
+
+	static void printBoard(String[] board) {
+		for (int i = 0; i < board.length; i++){
+			for (int j = 0; j < board[1].length(); j++) {
+				System.out.print(getCharAtXY(board, i, j));
+			}
+		}
+
 	}
 
 	static void nextMove(String player, int[] pos, String[] board) {
 		
-		System.out.println(BFS( player,  pos, board));
+		System.out.println(BFS(player, pos, board));
 		
 	}
 
