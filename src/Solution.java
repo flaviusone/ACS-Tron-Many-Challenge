@@ -404,9 +404,113 @@ public class Solution {
 
 	}
 
+	static String[] copyBoard(String[] board)
+	{
+		String[] board2 = new String[board.length];
+		for(int i=0;i<board2.length;i++)
+		{
+			board2[i] = new String(board[i]);
+		}		
+		return board2;
+	}
+	
 	static void nextMove(String player, int[] pos, String[] board) {
+		String[] board2;
+		int counter1 = 0, counter2 = 0, counter3 = 0, counter4 = 0, i;
+		int r_x = pos[0], r_y = pos[1], g_x = pos[2], g_y = pos[3];
+		char aux;
+		System.out.println(player);
+		if (!player.equals("r")) {
+			/* Search Down */
+			i = 1;
+			aux = getCharAtXY(board, r_x + i, r_y);
+			if (aux != '#' && aux != 'r' && aux != 'g') {
+				board2 = copyBoard(board);
+				board2[ r_x+ 1 ] = board[r_x+ 1].substring(0, r_y) + 'r' + board[r_x+ 1].substring(r_y+1);
+				counter1 = BFS(player, pos, board2);
+				printBoard(board2);
+				printBoard(board);
+			}
+			/* Search Up */
+			i = 1;
+			aux = getCharAtXY(board, r_x - i, r_y);
+			if (aux != '#' && aux != 'r' && aux != 'g') {
+				board2 = board;
+				counter2= BFS(player, pos, board2);
+			}
+			/* Search Right */
+			i = 1;
+			aux = getCharAtXY(board, r_x, r_y + i);
+			if (aux != '#' && aux != 'r' && aux != 'g') {
+				board2 = board;
+				counter3= BFS(player, pos, board2);;
+			}
+			/* Search Left */
+			i = 1;
+			aux = getCharAtXY(board, r_x, r_y - i);
+			if (aux != '#' && aux != 'r' && aux != 'g') {
+				board2 = board;
+				counter4= BFS(player, pos, board2);;
+			}
+
+		} else {
+			/* Search Down */
+			i = 1;
+			aux = getCharAtXY(board, g_x + i, g_y);
+			
+			if (aux != '#' && aux != 'r' && aux != 'g') {
+				board2 = board;
+				counter1= BFS(player, pos, board2);
+			}
+			/* Search Up */
+			i = 1;
+			aux = getCharAtXY(board, g_x - i, g_y);
+			if (aux != '#' && aux != 'r' && aux != 'g') {
+				board2 = board;
+				counter2= BFS(player, pos, board2);
+			}
+			/* Search Right */
+			i = 1;
+			aux = getCharAtXY(board, g_x, g_y + i);
+			if (aux != '#' && aux != 'r' && aux != 'g') {
+				board2 = board;
+				counter3= BFS(player, pos, board2);
+			}
+			/* Search Left */
+			i = 1;
+			aux = getCharAtXY(board, g_x, g_y - i);
+			if (aux != '#' && aux != 'r' && aux != 'g') {
+				board2 = board;
+				counter4= BFS(player, pos, board2);
+			}
+		}
 		
-		System.out.println(BFS(player, pos, board));
+		/* See whitch way is the best one */
+		int way;
+		if (counter1 >= counter2 && counter1 >= counter3 && counter1 >= counter4) {
+			way = 0; /* Down */
+		} else if (counter2 >= counter1 && counter2 >= counter3 && counter2 >= counter4)
+			way = 1; /* Up */
+		else if (counter3 >= counter2 && counter3 >= counter1 && counter3 >= counter4)
+			way = 2; /* Right */
+		else
+			way = 3; /* Left */
+
+		/* Print the best way to go */
+		switch (way) {
+		case 0:
+			System.out.println("DOWN");
+			break;
+		case 1:
+			System.out.println("UP");
+			break;
+		case 2:
+			System.out.println("RIGHT");
+			break;
+		default:
+			System.out.println("LEFT");
+			break;
+		}
 		
 	}
 
