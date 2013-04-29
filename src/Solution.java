@@ -26,7 +26,7 @@ public class Solution {
 	static int negamax_alfa_beta(String player, int[] pos, int alpha, int beta, String[] board,
 			int s_layer, int f_layer) {
 		String[] board2;
-		int r_x = pos[0], r_y = pos[1], g_x = pos[2], g_y = pos[3],s_layer2;
+		int r_x = pos[0], r_y = pos[1], g_x = pos[2], g_y = pos[3], s_layer2;
 		int[] pos2;
 		char aux;
 		Pair p;
@@ -95,7 +95,7 @@ public class Solution {
 					 * apeleaza negamex cu noul board adica board2 noul pos adica pos2
 					 */
 					s_layer2 = s_layer;
-					score = -negamax_alfa_beta(player2, pos2, -alpha, -beta, board2, s_layer2+1,
+					score = -negamax_alfa_beta(player2, pos2, -alpha, -beta, board2, s_layer2 + 1,
 							f_layer);
 					if (score >= beta)
 						return beta;
@@ -653,8 +653,11 @@ public class Solution {
 
 	static void nextMove(String player, int[] pos, String[] board) {
 		int score;
-		int max;
-		int move;
+		char aux;
+		String[] board2;
+		String player2;
+		int max=Integer.MIN_VALUE;
+		int move = 0;
 		Vector<Integer> directionsX = new Vector<Integer>();
 		Vector<Integer> directionsY = new Vector<Integer>();
 		directionsX.add(0);
@@ -665,51 +668,90 @@ public class Solution {
 		directionsY.add(-1);
 		directionsX.add(-1);
 		directionsY.add(0);
-		if (player.contains("r")){
-			
-			for(int i=0;i<4;i++){
-				if ((getCharAtXY(board, pos[0] + directionsX.get(i), pos[1] + directionsY.get(i)) != 'r')
-						&& (getCharAtXY(board, pos[0] + directionsX.get(i),
-								pos[1] + directionsY.get(i)) != '#')
-						&& (getCharAtXY(board, pos[0] + directionsX.get(i),
-								pos[1] + directionsY.get(i)) != 'g')){
+		int[] pos2;
+		if (player.contains("r")) {
+
+			for (int i = 0; i < 4; i++) {
+				aux = getCharAtXY(board, pos[0] + directionsX.get(i), pos[1] + directionsY.get(i));
+				if ((aux != 'r') && (aux != '#') && (aux != 'g')) {
 					// facem iar copy board cu marcare cu rosu directia aleasa
+					board2 = copyBoard(board);
 					// iar trebuie schimbat playerul
+					if (player.contains("g"))
+						player2 = "r";
+					else
+						player2 = "g";
 					// si schimbam si vectorul poz
-					score = -negamax_alfa_beta(player2, pos2, Integer.MIN_VALUE, -Integer.MAX_VALUE, 
-							board2, 0, 7);
+					pos2 = copyPos(pos);
+					
+					switch (i) {
+					case 0:
+						pos2[1]++;
+						break;
+					case 1:
+						pos2[0]++;
+						break;
+					case 2:
+						pos2[1]--;
+						break;
+					case 3:
+						pos2[0]--;
+						break;
+					}
+					score = -negamax_alfa_beta(player2, pos2, Integer.MIN_VALUE,
+							-Integer.MAX_VALUE, board2, 0, 7);
 					// aici nu mai trebuie modificat nimic
 					// ar fi trebuit refacut marcajul, dar daca utilizam copii e ok.
-					if(score > max){
+					if (score > max) {
 						max = score;
 						move = i;
 					}
 				}
 			}
-		}
-		else{
-			for(int i=0;i<4;i++){
+		} else {
+			for (int i = 0; i < 4; i++) {
 				if ((getCharAtXY(board, pos[2] + directionsX.get(i), pos[3] + directionsY.get(i)) != 'r')
-					&& (getCharAtXY(board, pos[2] + directionsX.get(i),
-							pos[3] + directionsY.get(i)) != '#')
-					&& (getCharAtXY(board, pos[2] + directionsX.get(i),
-							pos[3] + directionsY.get(i)) != 'g')){
+						&& (getCharAtXY(board, pos[2] + directionsX.get(i),
+								pos[3] + directionsY.get(i)) != '#')
+						&& (getCharAtXY(board, pos[2] + directionsX.get(i),
+								pos[3] + directionsY.get(i)) != 'g')) {
 					// facem iar copy board cu marcare cu rosu directia aleasa
+					board2 = copyBoard(board);
 					// iar trebuie schimbat playerul
+					if (player.contains("g"))
+						player2 = "r";
+					else
+						player2 = "g";
 					// si schimbam si vectorul poz
-					score = -negamax_alfa_beta(player2, pos2, Integer.MIN_VALUE, -Integer.MAX_VALUE, 
-							board2, 0, 7);
+					pos2 = copyPos(pos);
+					
+					switch (i) {
+					case 0:
+						pos2[3]++;
+						break;
+					case 1:
+						pos2[2]++;
+						break;
+					case 2:
+						pos2[3]--;
+						break;
+					case 3:
+						pos2[2]--;
+						break;
+					}
+					score = -negamax_alfa_beta(player2, pos2, Integer.MIN_VALUE,
+							-Integer.MAX_VALUE, board2, 0, 7);
 					// aici nu mai trebuie modificat nimic
 					// ar fi trebuit refacut marcajul, dar daca utilizam copii e ok.
-					if(score > max){
+					if (score > max) {
 						max = score;
 						move = i;
 					}
 				}
 			}
 		}
-		
-		switch (i) {
+
+		switch (move) {
 		case 2:
 			System.out.println("DOWN");
 			break;
@@ -723,8 +765,8 @@ public class Solution {
 			System.out.println("LEFT");
 			break;
 		}
-		
-		//BFS_Bot(player, pos, board);
+
+		// BFS_Bot(player, pos, board);
 	}
 
 	/* Tail starts here */
@@ -752,8 +794,6 @@ public class Solution {
 			board[i] = in.next();
 		}
 
-		
-		
 		nextMove(player, position, board);
 
 	}
