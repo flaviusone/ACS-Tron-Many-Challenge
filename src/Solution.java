@@ -66,6 +66,9 @@ public class Solution {
 						board2 = copyBoard(board);
 						pos2 = copyPos(pos);
 						// inverseaza rahatul din pos2 eventual
+						pos2[0] = pos[2];
+						pos2[1] = pos[3];
+						//
 
 						board2[g_x + directionsX.get(i)] = board[r_x + directionsX.get(i)]
 								.substring(0, r_y + directionsY.get(i))
@@ -77,6 +80,9 @@ public class Solution {
 						board2 = copyBoard(board);
 						pos2 = copyPos(pos);
 						// inverseaza rahatul din pos2 eventual
+						pos2[0] = pos[2];
+						pos2[1] = pos[3];
+						//
 
 						board2[g_x + directionsX.get(i)] = board[r_x + directionsX.get(i)]
 								.substring(0, r_y + directionsY.get(i))
