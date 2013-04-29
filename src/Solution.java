@@ -425,7 +425,8 @@ public class Solution {
 	static void BFS_Bot(String player, int[] pos, String[] board) {
 		String[] board2;
 		int[] pos2;
-		int counter1 = -1000, counter2 = -1000, counter3 = -1000, counter4 = -1000;
+		int counter1 = Integer.MIN_VALUE, counter2 = Integer.MIN_VALUE, 
+				counter3 = Integer.MIN_VALUE, counter4 = Integer.MIN_VALUE;
 		int r_x = pos[0], r_y = pos[1], g_x = pos[2], g_y = pos[3];
 		char aux;
 		if (player.contains("r")) {
