@@ -1,35 +1,35 @@
 import java.util.*;
 
-
 public class Solution {
 	/* Head ends here */
 
 	// chestie facuta just in case, ar putea fi stearsa.
 	public class Pair {
-	
+
 		public int first, second;
-		
-		public Pair (int first, int second) {
+
+		public Pair(int first, int second) {
 			this.first = first;
 			this.second = second;
 		}
-		
+
 		public String toString() {
-			return "(" + first + "," + second +")";
+			return "(" + first + "," + second + ")";
 		}
-	
+
 	}
 
+	/*
+	 * aici vin taierile... imi lipsesc niste linii
+	 */
 
-
-/* aici vin taierile... imi lipsesc niste linii
- */
- 
-	
-	static int negamax_alfa_beta(String player, int[] pos, int alpha, int beta, String[] board, 
-			int s_layer, int f_layer){
+	static int negamax_alfa_beta(String player, int[] pos, int alpha, int beta, String[] board,
+			int s_layer, int f_layer) {
+		String[] board2;
+		int r_x = pos[0], r_y = pos[1], g_x = pos[2], g_y = pos[3];
+		int[] pos2;
 		Pair p;
-		int score;
+		int score = 0; //Asta e ok sa fie lasat 0 initial ? sau il facem MIN/MAX_Int
 		Vector<Integer> directionsX = new Vector<Integer>();
 		Vector<Integer> directionsY = new Vector<Integer>();
 		directionsX.add(0);
@@ -40,52 +40,71 @@ public class Solution {
 		directionsY.add(-1);
 		directionsX.add(-1);
 		directionsY.add(0);
-		
-		if (s_layer == f_layer){ 
-			if (player == "g"){
+
+		if (s_layer == f_layer) {
+			if (player == "g") {
 				// apelul functiei scor
-				return BFS();
-				}
-			else {
+				return BFS(player, pos, board);
+			} else {
 				// apelul functiei scor
-				return -BFS();
+				return -BFS(player, pos, board);
 			}
-		}
-		else{	
+		} else {
 			String player2;
-			for (int i=0;i<4;i++){
-				if(player == "g"){
+			for (int i = 0; i < 4; i++) {
+				if (player == "g") {
 					player2 = "r";
-				}
-				else{
+				} else {
 					player2 = "g";
 				}
-				
-				if ((getCharAtXY(board, pos[0] + directionsX.get(i), pos[1] + directionsY.get(i)) != 'r') && 
-					(getCharAtXY(board, pos[0] + directionsX.get(i), pos[1] + directionsY.get(i)) != '#') && 
-					(getCharAtXY(board, pos[0] + directionsX.get(i), pos[1] + directionsY.get(i)) != 'g') ){
-					
-					if(player == "g"){
+
+				if ((getCharAtXY(board, pos[0] + directionsX.get(i), pos[1] + directionsY.get(i)) != 'r')
+						&& (getCharAtXY(board, pos[0] + directionsX.get(i),
+								pos[1] + directionsY.get(i)) != '#')
+						&& (getCharAtXY(board, pos[0] + directionsX.get(i),
+								pos[1] + directionsY.get(i)) != 'g')) {
+
+					if (player == "g") {
 						// marchez pentru verde directia pentru i actual.
+						board2 = copyBoard(board);
+						pos2 = copyPos(pos);
+						//inverseaza rahatul din pos2 eventual
+						
+						board2[g_x + directionsX.get(i)] = board[r_x + directionsX.get(i)]
+								.substring(0, r_y + directionsY.get(i))
+								+ 'g'
+								+ board[r_x + directionsX.get(i)].substring(r_y + 1
+										+ directionsY.get(i));
+						
+					} else {
+						board2 = copyBoard(board);
+						pos2 = copyPos(pos);
+						//inverseaza rahatul din pos2 eventual
+						
+						board2[g_x + directionsX.get(i)] = board[r_x + directionsX.get(i)]
+								.substring(0, r_y + directionsY.get(i))
+								+ 'g'
+								+ board[r_x + directionsX.get(i)].substring(r_y + 1
+										+ directionsY.get(i));
 					}
-					else{
-						//marchez pentru rosu
-					}
-					score = - negamax_alfa_beta(player2,  pos, -alpha, -beta, board, s_layer, f_layer);
-					if(score >= beta)
-							return beta;
+					
+					/* apeleaza negamex cu 
+					 * noul board adica board2
+					 * noul pos adica pos2
+					 */
+					score = -negamax_alfa_beta(player2, pos2, -alpha, -beta, board2, s_layer, f_layer);
+					if (score >= beta)
+						return beta;
 				}
 				// refac marcajul
-				if(score > alpha){
+				if (score > alpha) {
 					alpha = score;
 				}
 			}
-				return alpha;
+			return alpha;
 		}
 	}
 
-	
-	
 	/*
 	 * Culori pentru alg de BFS Probabil nu vm avea nevoie de toate
 	 */
