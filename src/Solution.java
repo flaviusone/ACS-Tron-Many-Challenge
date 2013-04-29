@@ -10,7 +10,7 @@ public class Solution {
 		ALB, GRI, NEGRU, RED, GREEN, WALL
 	}
 
-	public class Graph {
+	public static class Graph {
 		/*
 		 * Un fel de pseudo graph defapt pt ca nu am perechi de <nod,lista de vecini> ci doar o
 		 * lista de noduri care contine vecinii in el.
@@ -27,13 +27,16 @@ public class Solution {
 			for (int i = 1; i < board.length - 1; i++)
 				for (int j = 1; j < board[1].length() - 2; j++) {
 
-					Node a = new Node(index, i, j);
+					Solution.Node a = new Solution.Node(index, i, j);
 
 					if (i == pos[0] && j == pos[1] && red == null)
 						red = a;
 
-					if (i == pos[2] && j == pos[3] && green == null)
-						green = a;
+					if (i == pos[2] && j == pos[3] && green == null) {
+						System.out.println("Found green");
+						System.out.println(a);
+						this.green = a;
+					}
 
 					if (getCharAtXY(board, i - 1, j) == '-') {
 						a.neighbours_by_index.add(index - (board[1].length() - 3));
@@ -80,7 +83,7 @@ public class Solution {
 	}
 
 	/* Node class */
-	public class Node {
+	public static class Node {
 		int index;
 		int x, y;
 		ArrayList<Node> neighbours = new ArrayList<Node>();
@@ -306,11 +309,13 @@ public class Solution {
 	}
 
 	static int BFS(String player, int[] pos, String[] board) {
-		Solution sol = new Solution();
-		Solution.Graph g = sol.new Graph(player, pos, board);
+		// Solution sol = new Solution();
+		Solution.Graph g = new Solution.Graph(player, pos, board);
 		/* noduri de inceput pt bfs */
 		Node s1 = g.red;
 		Node s2 = g.green;
+		System.out.println(g.green);
+		System.out.println(s2);
 		Node u1, u2;
 		int arie1 = 1, arie2 = 1;
 
