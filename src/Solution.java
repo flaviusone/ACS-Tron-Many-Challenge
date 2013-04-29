@@ -1,12 +1,9 @@
 import java.util.*;
 
-import Solution.Pair;
 
 public class Solution {
 	/* Head ends here */
 
-	
-	
 	// chestie facuta just in case, ar putea fi stearsa.
 	public class Pair {
 	
@@ -64,9 +61,9 @@ public class Solution {
 					player2 = "g";
 				}
 				
-				if ((getCharAtXY(board, pos[0] + directionsX[i], pos[1] + directionsY[i]) != 'r') && 
-					(getCharAtXY(board, pos[0] + directionsX[i], pos[1] + directionsY[i]) != '#') && 
-					(getCharAtXY(board, pos[0] + directionsX[i], pos[1] + directionsY[i]) != 'g') ){
+				if ((getCharAtXY(board, pos[0] + directionsX.get(i), pos[1] + directionsY.get(i)) != 'r') && 
+					(getCharAtXY(board, pos[0] + directionsX.get(i), pos[1] + directionsY.get(i)) != '#') && 
+					(getCharAtXY(board, pos[0] + directionsX.get(i), pos[1] + directionsY.get(i)) != 'g') ){
 					
 					if(player == "g"){
 						// marchez pentru verde directia pentru i actual.
