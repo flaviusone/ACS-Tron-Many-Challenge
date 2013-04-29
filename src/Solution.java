@@ -652,7 +652,79 @@ public class Solution {
 	}
 
 	static void nextMove(String player, int[] pos, String[] board) {
-		BFS_Bot(player, pos, board);
+		int score;
+		int max;
+		int move;
+		Vector<Integer> directionsX = new Vector<Integer>();
+		Vector<Integer> directionsY = new Vector<Integer>();
+		directionsX.add(0);
+		directionsY.add(1);
+		directionsX.add(1);
+		directionsY.add(0);
+		directionsX.add(0);
+		directionsY.add(-1);
+		directionsX.add(-1);
+		directionsY.add(0);
+		if (player.contains("r")){
+			
+			for(int i=0;i<4;i++){
+				if ((getCharAtXY(board, pos[0] + directionsX.get(i), pos[1] + directionsY.get(i)) != 'r')
+						&& (getCharAtXY(board, pos[0] + directionsX.get(i),
+								pos[1] + directionsY.get(i)) != '#')
+						&& (getCharAtXY(board, pos[0] + directionsX.get(i),
+								pos[1] + directionsY.get(i)) != 'g')){
+					// facem iar copy board cu marcare cu rosu directia aleasa
+					// iar trebuie schimbat playerul
+					// si schimbam si vectorul poz
+					score = -negamax_alfa_beta(player2, pos2, Integer.MIN_VALUE, -Integer.MAX_VALUE, 
+							board2, 0, 7);
+					// aici nu mai trebuie modificat nimic
+					// ar fi trebuit refacut marcajul, dar daca utilizam copii e ok.
+					if(score > max){
+						max = score;
+						move = i;
+					}
+				}
+			}
+		}
+		else{
+			for(int i=0;i<4;i++){
+				if ((getCharAtXY(board, pos[2] + directionsX.get(i), pos[3] + directionsY.get(i)) != 'r')
+					&& (getCharAtXY(board, pos[2] + directionsX.get(i),
+							pos[3] + directionsY.get(i)) != '#')
+					&& (getCharAtXY(board, pos[2] + directionsX.get(i),
+							pos[3] + directionsY.get(i)) != 'g')){
+					// facem iar copy board cu marcare cu rosu directia aleasa
+					// iar trebuie schimbat playerul
+					// si schimbam si vectorul poz
+					score = -negamax_alfa_beta(player2, pos2, Integer.MIN_VALUE, -Integer.MAX_VALUE, 
+							board2, 0, 7);
+					// aici nu mai trebuie modificat nimic
+					// ar fi trebuit refacut marcajul, dar daca utilizam copii e ok.
+					if(score > max){
+						max = score;
+						move = i;
+					}
+				}
+			}
+		}
+		
+		switch (i) {
+		case 2:
+			System.out.println("DOWN");
+			break;
+		case 0:
+			System.out.println("UP");
+			break;
+		case 1:
+			System.out.println("RIGHT");
+			break;
+		default:
+			System.out.println("LEFT");
+			break;
+		}
+		
+		//BFS_Bot(player, pos, board);
 	}
 
 	/* Tail starts here */
@@ -680,6 +752,8 @@ public class Solution {
 			board[i] = in.next();
 		}
 
+		
+		
 		nextMove(player, position, board);
 
 	}
