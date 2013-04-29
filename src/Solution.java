@@ -25,7 +25,7 @@ public class Solution {
 
 			/* Adauga pt fiecare nod in parte indecsii vecinilor lui */
 			for (int i = 1; i < board.length - 1; i++)
-				for (int j = 1; j < board[1].length() - 1; j++) {
+				for (int j = 1; j < board[1].length() - 2; j++) {
 
 					Node a = new Node(index, i, j);
 
@@ -37,10 +37,10 @@ public class Solution {
 					}
 
 					if (getCharAtXY(board, i - 1, j) == '-') {
-						a.neighbours_by_index.add(index - (board[1].length() - 2));
+						a.neighbours_by_index.add(index - (board[1].length() - 3));
 					}
 					if (getCharAtXY(board, i + 1, j) == '-') {
-						a.neighbours_by_index.add(index + (board[1].length() - 2));
+						a.neighbours_by_index.add(index + (board[1].length() - 3));
 					}
 					if (getCharAtXY(board, i, j - 1) == '-') {
 						a.neighbours_by_index.add(index - 1);
@@ -320,7 +320,6 @@ public class Solution {
 
 		s1.culoare = Color.GRI;
 		s2.culoare = Color.GRI;
-
 		/* Initializare cele 2 cozi */
 		Queue<Node> q1 = new LinkedList<Node>();
 		Queue<Node> q2 = new LinkedList<Node>();
@@ -338,8 +337,7 @@ public class Solution {
 				if (v.culoare == Color.ALB) {
 					v.culoare = Color.GRI;
 					// debug
-					// board[v.x] = board[v.x].substring(0, v.y) + 'G' +
-					// board[v.x].substring(v.y+1);
+					board[v.x] = board[v.x].substring(0, v.y) + 'R' + board[v.x].substring(v.y + 1);
 					q1.add(v);
 				}
 			}
@@ -351,8 +349,7 @@ public class Solution {
 				if (v.culoare == Color.ALB) {
 					v.culoare = Color.GRI;
 					// debug
-					// board[v.x] = board[v.x].substring(0, v.y) + 'G' +
-					// board[v.x].substring(v.y+1);
+					board[v.x] = board[v.x].substring(0, v.y) + 'G' + board[v.x].substring(v.y + 1);
 					q2.add(v);
 				}
 			}
@@ -363,36 +360,49 @@ public class Solution {
 		/* daca se termina prematur q1 */
 		if (q1.isEmpty()) {
 			while (!q2.isEmpty()) {
+				// printBoard(board);
+
 				u2 = q2.poll();
 				arie2++;
 				/* pentru toti vecinii */
 				for (Node v : u2.neighbours) {
 					if (v.culoare == Color.ALB) {
 						v.culoare = Color.GRI;
+						// debug
+						board[v.x] = board[v.x].substring(0, v.y) + 'R'
+								+ board[v.x].substring(v.y + 1);
 						q2.add(v);
 					}
 				}
+
 				u2.culoare = Color.NEGRU;
 			}
 		}
 		if (q2.isEmpty()) {
 			while (!q1.isEmpty()) {
+				// printBoard(board);
+
 				u1 = q1.poll();
 				arie1++;
 				/* pentru toti vecinii */
 				for (Node v : u1.neighbours) {
 					if (v.culoare == Color.ALB) {
 						v.culoare = Color.GRI;
-						q2.add(v);
+						// debug
+						board[v.x] = board[v.x].substring(0, v.y) + 'R'
+								+ board[v.x].substring(v.y + 1);
+						q1.add(v);
 					}
 				}
+				// System.out.println(u1);
 				u1.culoare = Color.NEGRU;
 			}
 		}
-		if(player.contains("r"))
+		if (player.contains("r"))
 			return arie1 - 1 - arie2;
 		else
 			return arie2 - 1 - arie1;
+
 	}
 
 	/* Afiseaza board pt debug */
@@ -428,8 +438,7 @@ public class Solution {
 	static void BFS_Bot(String player, int[] pos, String[] board) {
 		String[] board2;
 		int[] pos2;
-		int counter1 = Integer.MIN_VALUE, counter2 = Integer.MIN_VALUE, 
-				counter3 = Integer.MIN_VALUE, counter4 = Integer.MIN_VALUE;
+		int counter1 = Integer.MIN_VALUE, counter2 = Integer.MIN_VALUE, counter3 = Integer.MIN_VALUE, counter4 = Integer.MIN_VALUE;
 		int r_x = pos[0], r_y = pos[1], g_x = pos[2], g_y = pos[3];
 		char aux;
 		if (player.contains("r")) {
@@ -476,7 +485,7 @@ public class Solution {
 				pos2[1]--;
 				board2[r_x] = board[r_x].substring(0, r_y - 1) + 'r' + board[r_x].substring(r_y);
 				counter4 = BFS(player, pos2, board2);
-				;
+
 			}
 
 		} else {
