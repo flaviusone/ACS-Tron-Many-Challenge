@@ -425,14 +425,13 @@ public class Solution {
 	static void BFS_Bot(String player, int[] pos, String[] board) {
 		String[] board2;
 		int[] pos2;
-		int counter1 = -1000, counter2 = -1000, counter3 = -1000, counter4 = -1000, i;
+		int counter1 = -1000, counter2 = -1000, counter3 = -1000, counter4 = -1000;
 		int r_x = pos[0], r_y = pos[1], g_x = pos[2], g_y = pos[3];
 		char aux;
 		if (player.contains("r")) {
 			/* Search Down */
-			i = 1;
 			// System.out.println("WTF BAA");
-			aux = getCharAtXY(board, r_x + i, r_y);
+			aux = getCharAtXY(board, r_x + 1, r_y);
 			if (aux != '#' && aux != 'r' && aux != 'g') {
 				board2 = copyBoard(board);
 				pos2 = copyPos(pos);
@@ -444,8 +443,7 @@ public class Solution {
 				// printBoard(board);
 			}
 			/* Search Up */
-			i = 1;
-			aux = getCharAtXY(board, r_x - i, r_y);
+			aux = getCharAtXY(board, r_x - 1, r_y);
 			if (aux != '#' && aux != 'r' && aux != 'g') {
 				board2 = copyBoard(board);
 				pos2 = copyPos(pos);
@@ -455,8 +453,7 @@ public class Solution {
 				counter2 = BFS(player, pos2, board2);
 			}
 			/* Search Right */
-			i = 1;
-			aux = getCharAtXY(board, r_x, r_y + i);
+			aux = getCharAtXY(board, r_x, r_y + 1);
 			if (aux != '#' && aux != 'r' && aux != 'g') {
 				board2 = copyBoard(board);
 				pos2 = copyPos(pos);
@@ -468,8 +465,7 @@ public class Solution {
 				// printBoard(board);
 			}
 			/* Search Left */
-			i = 1;
-			aux = getCharAtXY(board, r_x, r_y - i);
+			aux = getCharAtXY(board, r_x, r_y - 1);
 			if (aux != '#' && aux != 'r' && aux != 'g') {
 				board2 = copyBoard(board);
 				pos2 = copyPos(pos);
@@ -481,8 +477,7 @@ public class Solution {
 
 		} else {
 			/* Search Down */
-			i = 1;
-			aux = getCharAtXY(board, g_x + i, g_y);
+			aux = getCharAtXY(board, g_x + 1, g_y);
 
 			if (aux != '#' && aux != 'r' && aux != 'g') {
 				board2 = copyBoard(board);
@@ -493,8 +488,7 @@ public class Solution {
 				counter1 = BFS(player, pos2, board2);
 			}
 			/* Search Up */
-			i = 1;
-			aux = getCharAtXY(board, g_x - i, g_y);
+			aux = getCharAtXY(board, g_x - 1, g_y);
 			if (aux != '#' && aux != 'r' && aux != 'g') {
 				board2 = copyBoard(board);
 				pos2 = copyPos(pos);
@@ -504,8 +498,7 @@ public class Solution {
 				counter2 = BFS(player, pos2, board2);
 			}
 			/* Search Right */
-			i = 1;
-			aux = getCharAtXY(board, g_x, g_y + i);
+			aux = getCharAtXY(board, g_x, g_y + 1);
 			if (aux != '#' && aux != 'r' && aux != 'g') {
 				board2 = copyBoard(board);
 				pos2 = copyPos(pos);
@@ -515,8 +508,7 @@ public class Solution {
 				counter3 = BFS(player, pos2, board2);
 			}
 			/* Search Left */
-			i = 1;
-			aux = getCharAtXY(board, g_x, g_y - i);
+			aux = getCharAtXY(board, g_x, g_y - 1);
 			if (aux != '#' && aux != 'r' && aux != 'g') {
 				board2 = copyBoard(board);
 				pos2 = copyPos(pos);
