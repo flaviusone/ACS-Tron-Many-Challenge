@@ -26,7 +26,7 @@ public class Solution {
 	static int negamax_alfa_beta(String player, int[] pos, int alpha, int beta, String[] board,
 			int s_layer, int f_layer) {
 		String[] board2;
-		int r_x = pos[0], r_y = pos[1], g_x = pos[2], g_y = pos[3];
+		int r_x = pos[0], r_y = pos[1], g_x = pos[2], g_y = pos[3],s_layer2;
 		int[] pos2;
 		char aux;
 		Pair p;
@@ -88,7 +88,8 @@ public class Solution {
 					/*
 					 * apeleaza negamex cu noul board adica board2 noul pos adica pos2
 					 */
-					score = -negamax_alfa_beta(player2, pos2, -alpha, -beta, board2, s_layer+1,
+					s_layer2 = s_layer;
+					score = -negamax_alfa_beta(player2, pos2, -alpha, -beta, board2, s_layer2+1,
 							f_layer);
 					if (score >= beta)
 						return beta;
