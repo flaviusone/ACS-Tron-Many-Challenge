@@ -1,8 +1,94 @@
 import java.util.*;
 
+import Solution.Pair;
+
 public class Solution {
 	/* Head ends here */
 
+	
+	
+	// chestie facuta just in case, ar putea fi stearsa.
+	public class Pair {
+	
+		public int first, second;
+		
+		public Pair (int first, int second) {
+			this.first = first;
+			this.second = second;
+		}
+		
+		public String toString() {
+			return "(" + first + "," + second +")";
+		}
+	
+	}
+
+
+
+/* aici vin taierile... imi lipsesc niste linii
+ */
+ 
+	
+	static int negamax_alfa_beta(String player, int[] pos, int alpha, int beta, String[] board, 
+			int s_layer, int f_layer){
+		Pair p;
+		int score;
+		Vector<Integer> directionsX = new Vector<Integer>();
+		Vector<Integer> directionsY = new Vector<Integer>();
+		directionsX.add(0);
+		directionsY.add(1);
+		directionsX.add(1);
+		directionsY.add(0);
+		directionsX.add(0);
+		directionsY.add(-1);
+		directionsX.add(-1);
+		directionsY.add(0);
+		
+		if (s_layer == f_layer){ 
+			if (player == "g"){
+				// apelul functiei scor
+				return BFS();
+				}
+			else {
+				// apelul functiei scor
+				return -BFS();
+			}
+		}
+		else{	
+			String player2;
+			for (int i=0;i<4;i++){
+				if(player == "g"){
+					player2 = "r";
+				}
+				else{
+					player2 = "g";
+				}
+				
+				if ((getCharAtXY(board, pos[0] + directionsX[i], pos[1] + directionsY[i]) != 'r') && 
+					(getCharAtXY(board, pos[0] + directionsX[i], pos[1] + directionsY[i]) != '#') && 
+					(getCharAtXY(board, pos[0] + directionsX[i], pos[1] + directionsY[i]) != 'g') ){
+					
+					if(player == "g"){
+						// marchez pentru verde directia pentru i actual.
+					}
+					else{
+						//marchez pentru rosu
+					}
+					score = - negamax_alfa_beta(player2,  pos, -alpha, -beta, board, s_layer, f_layer);
+					if(score >= beta)
+							return beta;
+				}
+				// refac marcajul
+				if(score > alpha){
+					alpha = score;
+				}
+			}
+				return alpha;
+		}
+	}
+
+	
+	
 	/*
 	 * Culori pentru alg de BFS Probabil nu vm avea nevoie de toate
 	 */
