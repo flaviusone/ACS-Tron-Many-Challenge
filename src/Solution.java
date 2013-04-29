@@ -25,24 +25,22 @@ public class Solution {
 
 			/* Adauga pt fiecare nod in parte indecsii vecinilor lui */
 			for (int i = 1; i < board.length - 1; i++)
-				for (int j = 1; j < board[1].length() - 2; j++) {
+				for (int j = 1; j < board[1].length() - 1; j++) {
 
-					Solution.Node a = new Solution.Node(index, i, j);
+					Node a = new Node(index, i, j);
 
-					if (i == pos[0] && j == pos[1] && red == null)
+					if (i == pos[0] && j == pos[1] )
 						red = a;
 
-					if (i == pos[2] && j == pos[3] && green == null) {
-						System.out.println("Found green");
-						System.out.println(a);
-						this.green = a;
+					if (i == pos[2] && j == pos[3] ) {
+						green = a;
 					}
 
 					if (getCharAtXY(board, i - 1, j) == '-') {
-						a.neighbours_by_index.add(index - (board[1].length() - 3));
+						a.neighbours_by_index.add(index - (board[1].length() - 2));
 					}
 					if (getCharAtXY(board, i + 1, j) == '-') {
-						a.neighbours_by_index.add(index + (board[1].length() - 3));
+						a.neighbours_by_index.add(index + (board[1].length() - 2));
 					}
 					if (getCharAtXY(board, i, j - 1) == '-') {
 						a.neighbours_by_index.add(index - 1);
@@ -50,6 +48,7 @@ public class Solution {
 					if (getCharAtXY(board, i, j + 1) == '-') {
 						a.neighbours_by_index.add(index + 1);
 					}
+					System.out.println(a);
 					Nodes.add(a);
 					index++;
 				}
@@ -310,12 +309,10 @@ public class Solution {
 
 	static int BFS(String player, int[] pos, String[] board) {
 		// Solution sol = new Solution();
-		Solution.Graph g = new Solution.Graph(player, pos, board);
+		Graph g = new Graph(player, pos, board);
 		/* noduri de inceput pt bfs */
 		Node s1 = g.red;
 		Node s2 = g.green;
-		System.out.println(g.green);
-		System.out.println(s2);
 		Node u1, u2;
 		int arie1 = 1, arie2 = 1;
 
