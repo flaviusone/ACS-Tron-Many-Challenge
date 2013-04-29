@@ -25,22 +25,19 @@ public class Solution {
 
 			/* Adauga pt fiecare nod in parte indecsii vecinilor lui */
 			for (int i = 1; i < board.length - 1; i++)
-				for (int j = 1; j < board[1].length() - 2; j++) {
-
+				for (int j = 1; j < board[1].length() - 1; j++) {
 					Node a = new Node(index, i, j);
 
 					if (i == pos[0] && j == pos[1])
 						red = a;
-
-					if (i == pos[2] && j == pos[3]) {
+					if (i == pos[2] && j == pos[3])
 						green = a;
-					}
 
 					if (getCharAtXY(board, i - 1, j) == '-') {
-						a.neighbours_by_index.add(index - (board[1].length() - 3));
+						a.neighbours_by_index.add(index - (board[1].length() - 2));
 					}
 					if (getCharAtXY(board, i + 1, j) == '-') {
-						a.neighbours_by_index.add(index + (board[1].length() - 3));
+						a.neighbours_by_index.add(index + (board[1].length() - 2));
 					}
 					if (getCharAtXY(board, i, j - 1) == '-') {
 						a.neighbours_by_index.add(index - 1);
@@ -48,7 +45,7 @@ public class Solution {
 					if (getCharAtXY(board, i, j + 1) == '-') {
 						a.neighbours_by_index.add(index + 1);
 					}
-					// System.out.println(a);
+
 					Nodes.add(a);
 					index++;
 				}
@@ -127,10 +124,6 @@ public class Solution {
 			for (int i = 0; i < neighbours.size(); i++) {
 				res += Integer.toString(neighbours.get(i).index) + ", ";
 			}
-			/*
-			 * for (int i = 0; i < neighbours_by_index.size(); i++) { res +=
-			 * Integer.toString(neighbours_by_index.get(i)) + ", "; }
-			 */
 			return res;
 		}
 
@@ -308,7 +301,6 @@ public class Solution {
 	}
 
 	static int BFS(String player, int[] pos, String[] board) {
-		// Solution sol = new Solution();
 		Graph g = new Graph(player, pos, board);
 		/* noduri de inceput pt bfs */
 		Node s1 = g.red;
@@ -327,8 +319,6 @@ public class Solution {
 		q2.add(s2);
 
 		while (!q1.isEmpty() && !q2.isEmpty()) {
-			// printBoard(board);
-
 			u1 = q1.poll();
 			u2 = q2.poll();
 
@@ -336,9 +326,12 @@ public class Solution {
 			for (Node v : u1.neighbours) {
 				if (v.culoare == Color.ALB) {
 					v.culoare = Color.GRI;
+
 					// debug
-					board[v.x] = board[v.x].substring(0, v.y) + 'R' + board[v.x].substring(v.y + 1);
-					q1.add(v);
+					// board[v.x] = board[v.x].substring(0, v.y) + 'R' + board[v.x].substring(v.y +
+					// 1);
+					// q1.add(v);
+
 				}
 			}
 			arie1++;
@@ -349,8 +342,9 @@ public class Solution {
 				if (v.culoare == Color.ALB) {
 					v.culoare = Color.GRI;
 					// debug
-					board[v.x] = board[v.x].substring(0, v.y) + 'G' + board[v.x].substring(v.y + 1);
-					q2.add(v);
+					// board[v.x] = board[v.x].substring(0, v.y) + 'G' + board[v.x].substring(v.y +
+					// 1);
+					// q2.add(v);
 				}
 			}
 			arie2++;
@@ -360,7 +354,6 @@ public class Solution {
 		/* daca se termina prematur q1 */
 		if (q1.isEmpty()) {
 			while (!q2.isEmpty()) {
-				// printBoard(board);
 
 				u2 = q2.poll();
 				arie2++;
@@ -369,8 +362,8 @@ public class Solution {
 					if (v.culoare == Color.ALB) {
 						v.culoare = Color.GRI;
 						// debug
-						board[v.x] = board[v.x].substring(0, v.y) + 'R'
-								+ board[v.x].substring(v.y + 1);
+						// board[v.x] = board[v.x].substring(0, v.y) + 'R'
+						// + board[v.x].substring(v.y + 1);
 						q2.add(v);
 					}
 				}
@@ -380,8 +373,6 @@ public class Solution {
 		}
 		if (q2.isEmpty()) {
 			while (!q1.isEmpty()) {
-				// printBoard(board);
-
 				u1 = q1.poll();
 				arie1++;
 				/* pentru toti vecinii */
@@ -389,12 +380,11 @@ public class Solution {
 					if (v.culoare == Color.ALB) {
 						v.culoare = Color.GRI;
 						// debug
-						board[v.x] = board[v.x].substring(0, v.y) + 'R'
-								+ board[v.x].substring(v.y + 1);
+						// board[v.x] = board[v.x].substring(0, v.y) + 'R'
+						// + board[v.x].substring(v.y + 1);
 						q1.add(v);
 					}
 				}
-				// System.out.println(u1);
 				u1.culoare = Color.NEGRU;
 			}
 		}
@@ -443,7 +433,6 @@ public class Solution {
 		char aux;
 		if (player.contains("r")) {
 			/* Search Down */
-			// System.out.println("WTF BAA");
 			aux = getCharAtXY(board, r_x + 1, r_y);
 			if (aux != '#' && aux != 'r' && aux != 'g') {
 				board2 = copyBoard(board);
@@ -452,8 +441,6 @@ public class Solution {
 				board2[r_x + 1] = board[r_x + 1].substring(0, r_y) + 'r'
 						+ board[r_x + 1].substring(r_y + 1);
 				counter1 = BFS(player, pos2, board2);
-				// printBoard(board2);
-				// printBoard(board);
 			}
 			/* Search Up */
 			aux = getCharAtXY(board, r_x - 1, r_y);
@@ -474,8 +461,6 @@ public class Solution {
 				board2[r_x] = board[r_x].substring(0, r_y + 1) + 'r'
 						+ board[r_x].substring(r_y + 2);
 				counter3 = BFS(player, pos2, board2);
-				// printBoard(board2);
-				// printBoard(board);
 			}
 			/* Search Left */
 			aux = getCharAtXY(board, r_x, r_y - 1);
@@ -499,7 +484,7 @@ public class Solution {
 				board2[g_x + 1] = board[g_x + 1].substring(0, g_y) + 'g'
 						+ board[g_x + 1].substring(g_y + 1);
 				counter1 = BFS(player, pos2, board2);
-				//System.out.println(counter1);
+
 			}
 			/* Search Up */
 			aux = getCharAtXY(board, g_x - 1, g_y);
@@ -510,8 +495,6 @@ public class Solution {
 				board2[g_x - 1] = board[g_x - 1].substring(0, g_y) + 'g'
 						+ board[g_x - 1].substring(g_y + 1);
 				counter2 = BFS(player, pos2, board2);
-				//printBoard(board2);
-				//System.out.println(counter2);
 			}
 			/* Search Right */
 			aux = getCharAtXY(board, g_x, g_y + 1);
@@ -522,8 +505,6 @@ public class Solution {
 				board2[g_x] = board[g_x].substring(0, g_y + 1) + 'g'
 						+ board[g_x].substring(g_y + 2);
 				counter3 = BFS(player, pos2, board2);
-				//printBoard(board2);
-				//System.out.println(counter3);
 			}
 			/* Search Left */
 			aux = getCharAtXY(board, g_x, g_y - 1);
@@ -533,8 +514,6 @@ public class Solution {
 				pos2[3]--;
 				board2[g_x] = board[g_x].substring(0, g_y - 1) + 'g' + board[g_x].substring(g_y);
 				counter4 = BFS(player, pos2, board2);
-				//printBoard(board2);
-				//System.out.println(counter4);
 			}
 		}
 
