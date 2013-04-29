@@ -28,8 +28,9 @@ public class Solution {
 		String[] board2;
 		int r_x = pos[0], r_y = pos[1], g_x = pos[2], g_y = pos[3];
 		int[] pos2;
+		char aux;
 		Pair p;
-		int score = 0; //Asta e ok sa fie lasat 0 initial ? sau il facem MIN/MAX_Int
+		int score = 0; // Asta e ok sa fie lasat 0 initial ? sau il facem MIN/MAX_Int
 		Vector<Integer> directionsX = new Vector<Integer>();
 		Vector<Integer> directionsY = new Vector<Integer>();
 		directionsX.add(0);
@@ -57,42 +58,38 @@ public class Solution {
 				} else {
 					player2 = "g";
 				}
-
-				if ((getCharAtXY(board, pos[0] + directionsX.get(i), pos[1] + directionsY.get(i)) != 'r')
-						&& (getCharAtXY(board, pos[0] + directionsX.get(i),
-								pos[1] + directionsY.get(i)) != '#')
-						&& (getCharAtXY(board, pos[0] + directionsX.get(i),
-								pos[1] + directionsY.get(i)) != 'g')) {
+				aux = getCharAtXY(board, pos[0] + directionsX.get(i), pos[1] + directionsY.get(i));
+				if ((aux != 'r') && (aux != '#') && (aux != 'g')) {
 
 					if (player == "g") {
 						// marchez pentru verde directia pentru i actual.
 						board2 = copyBoard(board);
 						pos2 = copyPos(pos);
-						//inverseaza rahatul din pos2 eventual
-						
+						// inverseaza rahatul din pos2 eventual
+
 						board2[g_x + directionsX.get(i)] = board[r_x + directionsX.get(i)]
 								.substring(0, r_y + directionsY.get(i))
 								+ 'g'
 								+ board[r_x + directionsX.get(i)].substring(r_y + 1
 										+ directionsY.get(i));
-						
+
 					} else {
 						board2 = copyBoard(board);
 						pos2 = copyPos(pos);
-						//inverseaza rahatul din pos2 eventual
-						
+						// inverseaza rahatul din pos2 eventual
+
 						board2[g_x + directionsX.get(i)] = board[r_x + directionsX.get(i)]
 								.substring(0, r_y + directionsY.get(i))
 								+ 'g'
 								+ board[r_x + directionsX.get(i)].substring(r_y + 1
 										+ directionsY.get(i));
 					}
-					
-					/* apeleaza negamex cu 
-					 * noul board adica board2
-					 * noul pos adica pos2
+
+					/*
+					 * apeleaza negamex cu noul board adica board2 noul pos adica pos2
 					 */
-					score = -negamax_alfa_beta(player2, pos2, -alpha, -beta, board2, s_layer, f_layer);
+					score = -negamax_alfa_beta(player2, pos2, -alpha, -beta, board2, s_layer,
+							f_layer);
 					if (score >= beta)
 						return beta;
 				}
