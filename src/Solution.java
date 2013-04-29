@@ -80,7 +80,7 @@ public class Solution {
 
 						board2[g_x + directionsX.get(i)] = board[r_x + directionsX.get(i)]
 								.substring(0, r_y + directionsY.get(i))
-								+ 'g'
+								+ 'r'
 								+ board[r_x + directionsX.get(i)].substring(r_y + 1
 										+ directionsY.get(i));
 					}
@@ -88,7 +88,7 @@ public class Solution {
 					/*
 					 * apeleaza negamex cu noul board adica board2 noul pos adica pos2
 					 */
-					score = -negamax_alfa_beta(player2, pos2, -alpha, -beta, board2, s_layer,
+					score = -negamax_alfa_beta(player2, pos2, -alpha, -beta, board2, s_layer+1,
 							f_layer);
 					if (score >= beta)
 						return beta;
