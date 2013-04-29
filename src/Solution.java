@@ -29,10 +29,10 @@ public class Solution {
 
 					Node a = new Node(index, i, j);
 
-					if (i == pos[0] && j == pos[1] )
+					if (i == pos[0] && j == pos[1])
 						red = a;
 
-					if (i == pos[2] && j == pos[3] ) {
+					if (i == pos[2] && j == pos[3]) {
 						green = a;
 					}
 
@@ -48,7 +48,7 @@ public class Solution {
 					if (getCharAtXY(board, i, j + 1) == '-') {
 						a.neighbours_by_index.add(index + 1);
 					}
-					System.out.println(a);
+					// System.out.println(a);
 					Nodes.add(a);
 					index++;
 				}
@@ -411,9 +411,20 @@ public class Solution {
 		return board2;
 	}
 
+	static int[] copyPos(int[] pos) {
+		int[] res = new int[pos.length];
+
+		for (int i = 0; i < pos.length; i++) {
+			res[i] = pos[i];
+		}
+
+		return res;
+	}
+
 	/* Doar muta unde poate si apoi face BFS */
 	static void BFS_Bot(String player, int[] pos, String[] board) {
 		String[] board2;
+		int[] pos2;
 		int counter1 = -1000, counter2 = -1000, counter3 = -1000, counter4 = -1000, i;
 		int r_x = pos[0], r_y = pos[1], g_x = pos[2], g_y = pos[3];
 		char aux;
@@ -424,9 +435,11 @@ public class Solution {
 			aux = getCharAtXY(board, r_x + i, r_y);
 			if (aux != '#' && aux != 'r' && aux != 'g') {
 				board2 = copyBoard(board);
+				pos2 = copyPos(pos);
+				pos2[0]++;
 				board2[r_x + 1] = board[r_x + 1].substring(0, r_y) + 'r'
 						+ board[r_x + 1].substring(r_y + 1);
-				counter1 = BFS(player, pos, board2);
+				counter1 = BFS(player, pos2, board2);
 				// printBoard(board2);
 				// printBoard(board);
 			}
@@ -435,18 +448,22 @@ public class Solution {
 			aux = getCharAtXY(board, r_x - i, r_y);
 			if (aux != '#' && aux != 'r' && aux != 'g') {
 				board2 = copyBoard(board);
+				pos2 = copyPos(pos);
+				pos2[0]--;
 				board2[r_x - 1] = board[r_x - 1].substring(0, r_y) + 'r'
 						+ board[r_x - 1].substring(r_y + 1);
-				counter2 = BFS(player, pos, board2);
+				counter2 = BFS(player, pos2, board2);
 			}
 			/* Search Right */
 			i = 1;
 			aux = getCharAtXY(board, r_x, r_y + i);
 			if (aux != '#' && aux != 'r' && aux != 'g') {
 				board2 = copyBoard(board);
+				pos2 = copyPos(pos);
+				pos2[1]++;
 				board2[r_x] = board[r_x].substring(0, r_y + 1) + 'r'
 						+ board[r_x].substring(r_y + 2);
-				counter3 = BFS(player, pos, board2);
+				counter3 = BFS(player, pos2, board2);
 				// printBoard(board2);
 				// printBoard(board);
 			}
@@ -455,8 +472,10 @@ public class Solution {
 			aux = getCharAtXY(board, r_x, r_y - i);
 			if (aux != '#' && aux != 'r' && aux != 'g') {
 				board2 = copyBoard(board);
+				pos2 = copyPos(pos);
+				pos2[1]--;
 				board2[r_x] = board[r_x].substring(0, r_y - 1) + 'r' + board[r_x].substring(r_y);
-				counter4 = BFS(player, pos, board2);
+				counter4 = BFS(player, pos2, board2);
 				;
 			}
 
@@ -467,35 +486,43 @@ public class Solution {
 
 			if (aux != '#' && aux != 'r' && aux != 'g') {
 				board2 = copyBoard(board);
+				pos2 = copyPos(pos);
+				pos2[2]++;
 				board2[g_x + 1] = board[g_x + 1].substring(0, g_y) + 'r'
 						+ board[g_x + 1].substring(g_y + 1);
-				counter1 = BFS(player, pos, board2);
+				counter1 = BFS(player, pos2, board2);
 			}
 			/* Search Up */
 			i = 1;
 			aux = getCharAtXY(board, g_x - i, g_y);
 			if (aux != '#' && aux != 'r' && aux != 'g') {
 				board2 = copyBoard(board);
+				pos2 = copyPos(pos);
+				pos2[2]--;
 				board2[g_x - 1] = board[g_x - 1].substring(0, g_y) + 'r'
 						+ board[g_x - 1].substring(g_y + 1);
-				counter2 = BFS(player, pos, board2);
+				counter2 = BFS(player, pos2, board2);
 			}
 			/* Search Right */
 			i = 1;
 			aux = getCharAtXY(board, g_x, g_y + i);
 			if (aux != '#' && aux != 'r' && aux != 'g') {
 				board2 = copyBoard(board);
+				pos2 = copyPos(pos);
+				pos2[3]++;
 				board2[g_x] = board[g_x].substring(0, g_y + 1) + 'r'
 						+ board[g_x].substring(g_y + 2);
-				counter3 = BFS(player, pos, board2);
+				counter3 = BFS(player, pos2, board2);
 			}
 			/* Search Left */
 			i = 1;
 			aux = getCharAtXY(board, g_x, g_y - i);
 			if (aux != '#' && aux != 'r' && aux != 'g') {
 				board2 = copyBoard(board);
+				pos2 = copyPos(pos);
+				pos2[3]--;
 				board2[g_x] = board[g_x].substring(0, g_y - 1) + 'r' + board[g_x].substring(g_y);
-				counter4 = BFS(player, pos, board2);
+				counter4 = BFS(player, pos2, board2);
 			}
 		}
 
