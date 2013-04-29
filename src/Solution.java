@@ -1,8 +1,4 @@
-import java.io.*;
 import java.util.*;
-import java.text.*;
-import java.math.*;
-import java.util.regex.*;
 
 public class Solution {
 	/* Head ends here */
@@ -28,18 +24,19 @@ public class Solution {
 			int index = 0;
 
 			/* Adauga pt fiecare nod in parte indecsii vecinilor lui */
-			for (int i = 1; i < board.length-1 ; i++)
+			for (int i = 1; i < board.length - 1; i++)
 				for (int j = 1; j < board[1].length() - 2; j++) {
 
 					Node a = new Node(index, i, j);
 
-					if (i == pos[0] && j == pos[1])
+					if (i == pos[0] && j == pos[1] && red == null)
 						red = a;
-					if (i == pos[2] && j == pos[3])
+
+					if (i == pos[2] && j == pos[3] && green == null)
 						green = a;
 
 					if (getCharAtXY(board, i - 1, j) == '-') {
-						a.neighbours_by_index.add(index - (board[1].length() - 3));//trebuei umblat p aici
+						a.neighbours_by_index.add(index - (board[1].length() - 3));
 					}
 					if (getCharAtXY(board, i + 1, j) == '-') {
 						a.neighbours_by_index.add(index + (board[1].length() - 3));
@@ -318,6 +315,7 @@ public class Solution {
 		int arie1 = 1, arie2 = 1;
 
 		/* incepem prelucrearea nodurilor deci culoare devine gri */
+
 		s1.culoare = Color.GRI;
 		s2.culoare = Color.GRI;
 
@@ -326,12 +324,10 @@ public class Solution {
 		Queue<Node> q2 = new LinkedList<Node>();
 		q1.add(s1);
 		q2.add(s2);
- 
-		
-		
+
 		while (!q1.isEmpty() && !q2.isEmpty()) {
-			//printBoard(board);
-			
+			// printBoard(board);
+
 			u1 = q1.poll();
 			u2 = q2.poll();
 
@@ -340,7 +336,8 @@ public class Solution {
 				if (v.culoare == Color.ALB) {
 					v.culoare = Color.GRI;
 					// debug
-					//board[v.x] = board[v.x].substring(0, v.y) + 'G' + board[v.x].substring(v.y+1);
+					// board[v.x] = board[v.x].substring(0, v.y) + 'G' +
+					// board[v.x].substring(v.y+1);
 					q1.add(v);
 				}
 			}
@@ -351,16 +348,14 @@ public class Solution {
 			for (Node v : u2.neighbours) {
 				if (v.culoare == Color.ALB) {
 					v.culoare = Color.GRI;
-					//debug
-					//board[v.x] = board[v.x].substring(0, v.y) + 'G' + board[v.x].substring(v.y+1);
+					// debug
+					// board[v.x] = board[v.x].substring(0, v.y) + 'G' +
+					// board[v.x].substring(v.y+1);
 					q2.add(v);
 				}
 			}
 			arie2++;
 			u2.culoare = Color.NEGRU;
-
-			
-			
 		}
 
 		/* daca se termina prematur q1 */
@@ -395,8 +390,9 @@ public class Solution {
 		return arie1 - 1 - arie2;
 	}
 
+	/* Afiseaza board pt debug */
 	static void printBoard(String[] board) {
-		for (int i = 0; i < board.length; i++){
+		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board[1].length(); j++) {
 				System.out.print(getCharAtXY(board, i, j));
 			}
@@ -404,17 +400,17 @@ public class Solution {
 
 	}
 
-	static String[] copyBoard(String[] board)
-	{
+	/* Metoda care copiaza un board */
+	static String[] copyBoard(String[] board) {
 		String[] board2 = new String[board.length];
-		for(int i=0;i<board2.length;i++)
-		{
+		for (int i = 0; i < board2.length; i++) {
 			board2[i] = new String(board[i]);
-		}		
+		}
 		return board2;
 	}
-	
-	static void BFS_Bot(String player, int[] pos,String[] board){
+
+	/* Doar muta unde poate si apoi face BFS */
+	static void BFS_Bot(String player, int[] pos, String[] board) {
 		String[] board2;
 		int counter1 = -1000, counter2 = -1000, counter3 = -1000, counter4 = -1000, i;
 		int r_x = pos[0], r_y = pos[1], g_x = pos[2], g_y = pos[3];
@@ -422,78 +418,85 @@ public class Solution {
 		if (player.contains("r")) {
 			/* Search Down */
 			i = 1;
-			//System.out.println("WTF BAA");
+			// System.out.println("WTF BAA");
 			aux = getCharAtXY(board, r_x + i, r_y);
 			if (aux != '#' && aux != 'r' && aux != 'g') {
 				board2 = copyBoard(board);
-				board2[ r_x+ 1 ] = board[r_x+ 1].substring(0, r_y) + 'r' + board[r_x+ 1].substring(r_y+1);
+				board2[r_x + 1] = board[r_x + 1].substring(0, r_y) + 'r'
+						+ board[r_x + 1].substring(r_y + 1);
 				counter1 = BFS(player, pos, board2);
-				//printBoard(board2);
-				//printBoard(board);
+				// printBoard(board2);
+				// printBoard(board);
 			}
 			/* Search Up */
 			i = 1;
 			aux = getCharAtXY(board, r_x - i, r_y);
 			if (aux != '#' && aux != 'r' && aux != 'g') {
 				board2 = copyBoard(board);
-				board2[ r_x- 1 ] = board[r_x- 1].substring(0, r_y) + 'r' + board[r_x- 1].substring(r_y+1);
-				counter2= BFS(player, pos, board2);
+				board2[r_x - 1] = board[r_x - 1].substring(0, r_y) + 'r'
+						+ board[r_x - 1].substring(r_y + 1);
+				counter2 = BFS(player, pos, board2);
 			}
 			/* Search Right */
 			i = 1;
 			aux = getCharAtXY(board, r_x, r_y + i);
 			if (aux != '#' && aux != 'r' && aux != 'g') {
 				board2 = copyBoard(board);
-				board2[ r_x ] = board[r_x].substring(0, r_y+1) + 'r' + board[r_x].substring(r_y+2);
-				counter3= BFS(player, pos, board2);
-//				printBoard(board2);
-//				printBoard(board);
+				board2[r_x] = board[r_x].substring(0, r_y + 1) + 'r'
+						+ board[r_x].substring(r_y + 2);
+				counter3 = BFS(player, pos, board2);
+				// printBoard(board2);
+				// printBoard(board);
 			}
 			/* Search Left */
 			i = 1;
 			aux = getCharAtXY(board, r_x, r_y - i);
 			if (aux != '#' && aux != 'r' && aux != 'g') {
 				board2 = copyBoard(board);
-				board2[ r_x ] = board[r_x].substring(0, r_y-1) + 'r' + board[r_x].substring(r_y);
-				counter4= BFS(player, pos, board2);;
+				board2[r_x] = board[r_x].substring(0, r_y - 1) + 'r' + board[r_x].substring(r_y);
+				counter4 = BFS(player, pos, board2);
+				;
 			}
 
 		} else {
 			/* Search Down */
 			i = 1;
 			aux = getCharAtXY(board, g_x + i, g_y);
-			
+
 			if (aux != '#' && aux != 'r' && aux != 'g') {
 				board2 = copyBoard(board);
-				board2[ g_x+ 1 ] = board[g_x+ 1].substring(0, g_y) + 'r' + board[g_x+ 1].substring(g_y+1);
-				counter1= BFS(player, pos, board2);
+				board2[g_x + 1] = board[g_x + 1].substring(0, g_y) + 'r'
+						+ board[g_x + 1].substring(g_y + 1);
+				counter1 = BFS(player, pos, board2);
 			}
 			/* Search Up */
 			i = 1;
 			aux = getCharAtXY(board, g_x - i, g_y);
 			if (aux != '#' && aux != 'r' && aux != 'g') {
 				board2 = copyBoard(board);
-				board2[ g_x- 1 ] = board[g_x- 1].substring(0, g_y) + 'r' + board[g_x- 1].substring(g_y+1);
-				counter2= BFS(player, pos, board2);
+				board2[g_x - 1] = board[g_x - 1].substring(0, g_y) + 'r'
+						+ board[g_x - 1].substring(g_y + 1);
+				counter2 = BFS(player, pos, board2);
 			}
 			/* Search Right */
 			i = 1;
 			aux = getCharAtXY(board, g_x, g_y + i);
 			if (aux != '#' && aux != 'r' && aux != 'g') {
 				board2 = copyBoard(board);
-				board2[ g_x ] = board[g_x].substring(0, g_y+1) + 'r' + board[g_x].substring(g_y+2);
-				counter3= BFS(player, pos, board2);
+				board2[g_x] = board[g_x].substring(0, g_y + 1) + 'r'
+						+ board[g_x].substring(g_y + 2);
+				counter3 = BFS(player, pos, board2);
 			}
 			/* Search Left */
 			i = 1;
 			aux = getCharAtXY(board, g_x, g_y - i);
 			if (aux != '#' && aux != 'r' && aux != 'g') {
 				board2 = copyBoard(board);
-				board2[ g_x ] = board[g_x].substring(0, g_y-1) + 'r' + board[g_x].substring(g_y);
-				counter4= BFS(player, pos, board2);
+				board2[g_x] = board[g_x].substring(0, g_y - 1) + 'r' + board[g_x].substring(g_y);
+				counter4 = BFS(player, pos, board2);
 			}
 		}
-		
+
 		/* See whitch way is the best one */
 		int way;
 		if (counter1 >= counter2 && counter1 >= counter3 && counter1 >= counter4) {
@@ -521,10 +524,9 @@ public class Solution {
 			break;
 		}
 	}
-	
+
 	static void nextMove(String player, int[] pos, String[] board) {
-		
-		
+		BFS_Bot(player, pos, board);
 	}
 
 	/* Tail starts here */
