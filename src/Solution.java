@@ -26,24 +26,32 @@ public class Solution {
 	static int negamax_alfa_beta(String player, int[] pos, int alpha, int beta, String[] board,
 			int s_layer, int f_layer) {
 		String[] board2;
+		String player2;
 		int r_x = pos[0], r_y = pos[1], g_x = pos[2], g_y = pos[3], s_layer2;
 		int[] pos2;
-		char aux;
-		Pair p;
+		char aux = '-';
 		int score = 0; // Asta e ok sa fie lasat 0 initial ? sau il facem MIN/MAX_Int
 		Vector<Integer> directionsX = new Vector<Integer>();
 		Vector<Integer> directionsY = new Vector<Integer>();
+
+		// dreapta
 		directionsX.add(0);
 		directionsY.add(1);
+
+		// jos
 		directionsX.add(1);
 		directionsY.add(0);
+
+		// stanga
 		directionsX.add(0);
 		directionsY.add(-1);
+
+		// sus
 		directionsX.add(-1);
 		directionsY.add(0);
 
 		if (s_layer == f_layer) {
-			if (player == "g") {
+			if (player.contains("g")) {
 				// apelul functiei scor
 				return BFS(player, pos, board);
 			} else {
@@ -51,17 +59,24 @@ public class Solution {
 				return -BFS(player, pos, board);
 			}
 		} else {
-			String player2;
+
 			for (int i = 0; i < 4; i++) {
-				
+
 				if (player.contains("g")) {
-					aux = getCharAtXY(board, pos[2] + directionsX.get(i), pos[3] + directionsY.get(i));
+					try{
+					aux = getCharAtXY(board, pos[2] + directionsX.get(i),
+							pos[3] + directionsY.get(i));
+					} catch (StringIndexOutOfBoundsException e)
+					{
+						System.out.println("Pe X am" + (pos[2]+directionsX.get(i)) + ", pe y am " + (pos[3] + directionsY.get(i)) );
+					}
 					player2 = "r";
 				} else {
-					aux = getCharAtXY(board, pos[0] + directionsX.get(i), pos[1] + directionsY.get(i));
+					aux = getCharAtXY(board, pos[0] + directionsX.get(i),
+							pos[1] + directionsY.get(i));
 					player2 = "g";
 				}
-				
+
 				if ((aux != 'r') && (aux != '#') && (aux != 'g')) {
 
 					if (player.contains("g")) {
@@ -86,9 +101,10 @@ public class Solution {
 
 						board2[g_x + directionsX.get(i)] = board[g_x + directionsX.get(i)]
 								.substring(0, g_y + directionsY.get(i))
-								+ 'g'
+								+ "g"
 								+ board[g_x + directionsX.get(i)].substring(g_y + 1
 										+ directionsY.get(i));
+						// printBoard(board2);
 
 					} else {
 						board2 = copyBoard(board);
@@ -111,9 +127,10 @@ public class Solution {
 
 						board2[r_x + directionsX.get(i)] = board[r_x + directionsX.get(i)]
 								.substring(0, r_y + directionsY.get(i))
-								+ 'r'
+								+ "r"
 								+ board[r_x + directionsX.get(i)].substring(r_y + 1
 										+ directionsY.get(i));
+						// printBoard(board2);
 					}
 
 					/*
@@ -675,8 +692,7 @@ public class Solution {
 			break;
 		}
 	}
-
-	static void nextMove(String player, int[] pos, String[] board) {
+	static void negamax_Bot(String player, int[] pos, String[] board) {
 		int score;
 		char aux;
 		String[] board2;
@@ -702,7 +718,7 @@ public class Solution {
 					// facem iar copy board cu marcare cu rosu directia aleasa
 					board2 = copyBoard(board);
 					// iar trebuie schimbat playerul
-					//zic direct ca stiu cine sunt din iful principal
+					// zic direct ca stiu cine sunt din iful principal
 					player2 = "g";
 					// si schimbam si vectorul poz
 					pos2 = copyPos(pos);
@@ -741,7 +757,7 @@ public class Solution {
 					// facem iar copy board cu marcare cu rosu directia aleasa
 					board2 = copyBoard(board);
 					// iar trebuie schimbat playerul
-					//zic direct ca stiu cine sunt din iful principal
+					// zic direct ca stiu cine sunt din iful principal
 					player2 = "r";
 					// si schimbam si vectorul poz
 					pos2 = copyPos(pos);
@@ -787,6 +803,10 @@ public class Solution {
 			break;
 		}
 
+	}
+	
+	static void nextMove(String player, int[] pos, String[] board) {
+		negamax_Bot(player, pos, board);
 		// BFS_Bot(player, pos, board);
 	}
 
