@@ -67,7 +67,9 @@ https://www.hackerrank.com/showgame/2123236
 Etapa 2:
 
 	Botul foloseste un algoritm de tip alpha-beta pruning pentru a calcula pentru 
-fiecare mutare posibila a botului, care este cea mai eficienta.
+fiecare mutare posibila a botului, care este cea mai eficienta.La acest algoritm se 
+mai adauga o cautare de tip BFS bidirectionala ce ajuta la calculul ariei maximale 
+in momentul respectiv.
 	Ideea botului este aceea de a calcula, in functie de posibilele mutari,  
 daca suprafata disponibila este mai mare decat cea a adversarului. 
 
@@ -76,27 +78,34 @@ adversar. In functie de punctele de articulatie intalnite pe parcurs si de
 numarul de puncte de articulatie disponibile in "camera" in care acesta se 
 afla, el ar trebui sa blocheze anumite iesiri pentru a micsora radical suprafata 
 disponibila a botului adversar. 
+
 	Pentru aceasta, trebuie calculat daca botul nostru poate ajunge la acel 
 punct de articulatie inaintea botului adversar (care probabil va incerca sa 
 blocheze si el punctul de articulatie respectiv pentru a-i limita botului nostru 
 suprafata disponibila si deci, sansele de castig).
+
 	In cazul in care botul adversar i-ar taia calea botului nostru si ar reusi 
 sa il inchida intr-o camera, atunci ne-am gandit ca cea mai eficienta varianta 
 ar fi un bot de tip explorer, care umple eficient spatiul pe care il are la 
-dispozitie pentru a castiga timp.
+dispozitie pentru a castiga timp.(implementat metoda survival)
 
 	Pentru aceasta etapa a proiectului, am hotarat cu totii ca aceasta este 
 cea mai buna metoda de abordare a problemei, iar contributiile concrete ale 
 fiecarui membru sunt urmatoarele:
+
 	- Flavius Tirnacop: a implementat strategia pentru construirea unui graf din 
 	matricea hartii pe baza caruia se poate realiza calcularea unei mutari 
-	eficiente.
+	eficiente.A implementat metoda care face un BFS bidirectional pornind din 
+	cele doua capete ale playerilor pentru a afla care este in avantaj.
+
 	- Irina Gosu: a implementat metode care calculeaza punctele de articulatie 
 	dintr-o camera in care se afla un bot si realizeaza umplerea eficienta a 
 	unui spatiu disponibil atunci cand botul este "inchis" intr-o camera de 
 	catre adversar.
-	- Mihai Soare: a implementat metode care calculeaza costul unei mutari 
-	pentru a putea determina mutarea cea mai eficienta.
+
+	- Mihai Soare: a implementat metoda de alpha-beta pruning care calculeaza 
+	costul unei mutari pentru a putea determina mutarea cea mai eficienta.
+
 	- Laurentiu Popescu: a facut research pentru a determina maniera in care ar 
 	trebui sa mute un bot pentru a functiona eficient. 
 	
