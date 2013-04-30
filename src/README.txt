@@ -107,7 +107,12 @@ fiecarui membru sunt urmatoarele:
 	costul unei mutari pentru a putea determina mutarea cea mai eficienta.
 
 	- Laurentiu Popescu: a facut research pentru a determina maniera in care ar 
-	trebui sa mute un bot pentru a functiona eficient. 
+	trebui sa mute un bot pentru a functiona eficient.
+
+	Pentru mai multe detalii check github. 
+
+	Momentan nu am reusit sa impelmentam corect functia de alpha beta asa ca
+	am decis sa ramanem la varianta de backup doar cu BFS bidirectional.
 	
 	Rage_Quitters vs. stage2bot: 
 
